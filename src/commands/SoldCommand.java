@@ -30,7 +30,7 @@ public class SoldCommand implements Command {
             System.out.println("Failed to get product with ID " + id);
         }
 
-        boolean statusChanged = product.changeProductStatus(ProductStatus.SOLD);
+        boolean statusChanged = product.changeStatus(ProductStatus.SOLD);
         if (statusChanged) {
             System.out.println("Successfully sold product with ID " + id);
         } else {

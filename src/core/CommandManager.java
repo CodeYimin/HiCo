@@ -35,7 +35,7 @@ public class CommandManager {
 
     public boolean executeCommand(String commandName) {
         for (Command command : commands) {
-            if (command.getName().toLowerCase().equals(commandName.toLowerCase())) {
+            if (command.getName().equalsIgnoreCase(commandName)) {
                 command.execute(this);
                 return true;
             }

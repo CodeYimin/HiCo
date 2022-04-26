@@ -50,7 +50,7 @@ public class MakeAvailableCommand implements Command {
             return;
         }
 
-        boolean statusChanged = product.changeProductStatus(ProductStatus.AVAILABLE);
+        boolean statusChanged = product.changeStatus(ProductStatus.AVAILABLE);
         if (statusChanged) {
             productStorage.syncProduct(product);
             System.out.println("Successfully added product with ID " + id);

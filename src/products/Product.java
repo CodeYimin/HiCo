@@ -63,7 +63,7 @@ public abstract class Product {
         this.status = status;
     }
 
-    public boolean changeProductStatus(String newStatus) {
+    public boolean changeStatus(String newStatus) {
         boolean isValidStatusChange = ProductStatus.isValidStatusChange(status, newStatus);
         if (!isValidStatusChange) {
             return false;
@@ -133,7 +133,7 @@ public abstract class Product {
 
         @Override
         public boolean accept(Product product) {
-            return product.getStatus().equals(status);
+            return product.getStatus().equalsIgnoreCase(status);
         }
     }
 
@@ -146,9 +146,9 @@ public abstract class Product {
 
         @Override
         public boolean accept(Product product) {
-            if (type.equals(ProductType.CAR)) {
+            if (type.equalsIgnoreCase(ProductType.CAR)) {
                 return product instanceof Car;
-            } else if (type.equals(ProductType.BODYWEAR)) {
+            } else if (type.equalsIgnoreCase(ProductType.BODYWEAR)) {
                 return product instanceof Bodywear;
             } else {
                 return false;

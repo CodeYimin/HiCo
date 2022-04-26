@@ -29,47 +29,41 @@ public class ListCommand implements Command {
         Scanner keyboard = commandManager.getKeyboard();
 
         System.out.print("Would you like to apply filters (y/N): ");
-        String useFilters = keyboard.nextLine().toLowerCase();
+        String useFilters = keyboard.nextLine();
 
-        if (!useFilters.equals("y")) {
+        if (!useFilters.equalsIgnoreCase("y")) {
             System.out.println("Entire inventory: ");
             System.out.println(productStorage);
             return;
         }
 
-        String[] statusOptions = { "all", "requested", "available", "on_hold", "sold" };
-        String status = InputUtils.promptString(keyboard, "Status filter (All, requested, available, on_hold, sold): ",
-                statusOptions);
+        String[] statusOptions = ProductStatus.getAllStatuses();
+        String status = InputUtils.promptString(keyboard, "Status filter " + Arrays.toString(statusOptions) + ": ",
+                statusOptions, true);
 
-        String[] typeOptions = { "all", "car", "bodywear" };
-        String type = InputUtils.promptString(keyboard, "Type filter (All, car, bodywear): ", typeOptions);
+        String[] typeOptions = ProductType.getAllTypes();
+        String type = InputUtils.promptString(keyboard, "Type filter " + Arrays.toString(typeOptions) + ": ",
+                typeOptions, true);
 
         String[] sortByOptions = { "id", "name", "price" };
-        String sortBy = InputUtils.promptString(keyboard, "Sort by (id, name, price): ", sortByOptions);
+        String sortBy = InputUtils.promptString(keyboard, "Sort by " + Arrays.toString(sortByOptions) + ": ",
+                sortByOptions, false);
 
         ProductFilter statusFilter = null;
         ProductFilter typeFilter = null;
 
         // STATUS FILTER
-        if (status.equals("all")) {
+        if (status.trim().length() == 0) {
             // Leave filter as null
-        } else if (status.equals("requested")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.REQUESTED);
-        } else if (status.equals("available")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.AVAILABLE);
-        } else if (status.equals("on_hold")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.ON_HOLD);
-        } else if (status.equals("sold")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.SOLD);
+        } else {
+            statusFilter = new Product.StatusFilter(ProductStatus.getStatus(status));
         }
 
         // TYPE FILTER
-        if (type.equals("all")) {
+        if (type.trim().length() == 0) {
             // Leave filter as null
-        } else if (type.equals("car")) {
-            typeFilter = new Product.TypeFilter(ProductType.CAR);
-        } else if (type.equals("bodywear")) {
-            typeFilter = new Product.TypeFilter(ProductType.BODYWEAR);
+        } else {
+            typeFilter = new Product.TypeFilter(ProductType.getType(type));
         }
 
         ProductFilter[] filters = {};
@@ -83,11 +77,11 @@ public class ListCommand implements Command {
         Product[] filteredProducts = productStorage.getProducts(filters);
 
         // SORT BY
-        if (sortBy.equals("price")) {
+        if (sortBy.equalsIgnoreCase("price")) {
             Arrays.sort(filteredProducts, new Product.PriceComparator());
-        } else if (sortBy.equals("name")) {
+        } else if (sortBy.equalsIgnoreCase("name")) {
             Arrays.sort(filteredProducts, new Product.NameComparator());
-        } else if (sortBy.equals("id")) {
+        } else if (sortBy.equalsIgnoreCase("id")) {
             Arrays.sort(filteredProducts, new Product.IdComparator());
         }
 

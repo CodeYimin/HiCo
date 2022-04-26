@@ -27,13 +27,13 @@ public class RequestCommand implements Command {
 
         String[] typeOptions = { "car", "bodywear" };
         String type = InputUtils.promptString(keyboard, "Enter a product type (Car, bodywear): ",
-                typeOptions);
+                typeOptions, false);
 
         Product newProduct = null;
 
-        if (type.equals("car")) {
+        if (type.equalsIgnoreCase("car")) {
             newProduct = Car.fromInput(keyboard);
-        } else if (type.equals("bodywear")) {
+        } else if (type.equalsIgnoreCase("bodywear")) {
             newProduct = Bodywear.fromInput(keyboard);
         }
 

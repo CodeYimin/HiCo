@@ -44,7 +44,7 @@ public class HoldCommand implements Command {
             return;
         }
 
-        boolean statusChanged = product.changeProductStatus(ProductStatus.ON_HOLD);
+        boolean statusChanged = product.changeStatus(ProductStatus.ON_HOLD);
         if (statusChanged) {
             productStorage.syncProduct(product);
             System.out.println("Successfully held product with ID " + id);

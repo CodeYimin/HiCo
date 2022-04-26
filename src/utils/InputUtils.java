@@ -43,9 +43,12 @@ public class InputUtils {
         return true;
     }
 
-    public static boolean isValidChoice(String response, String[] choices) {
+    public static boolean isValidChoice(String response, String[] choices, boolean allowBlank) {
+        if (allowBlank && response.trim().length() == 0) {
+            return true;
+        }
         for (String choice : choices) {
-            if (choice.equals(response)) {
+            if (choice.equalsIgnoreCase(response)) {
                 return true;
             }
         }
@@ -54,13 +57,13 @@ public class InputUtils {
 
     public static String promptString(Scanner keyboard, String prompt) {
         System.out.print(prompt);
-        String response = keyboard.nextLine().toLowerCase();
+        String response = keyboard.nextLine();
         return response;
     }
 
-    public static String promptString(Scanner keyboard, String prompt, String[] choices) {
+    public static String promptString(Scanner keyboard, String prompt, String[] choices, boolean allowBlank) {
         String response = promptString(keyboard, prompt);
-        while (!isValidChoice(response, choices)) {
+        while (!isValidChoice(response, choices, allowBlank)) {
             System.out.println("Invalid choice. Please enter one of the following: ");
             for (String choice : choices) {
                 System.out.println("\t- " + choice);
