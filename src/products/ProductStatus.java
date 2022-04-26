@@ -1,13 +1,13 @@
 package products;
 
 public class ProductStatus {
-    public static final String REQUESTED = "requested";
-    public static final String AVAILABLE = "available";
-    public static final String ON_HOLD = "on_hold";
-    public static final String SOLD = "sold";
-    public static final String RETURNED = "returned";
+    public static final String REQUESTED = "REQUESTED";
+    public static final String AVAILABLE = "AVAILABLE";
+    public static final String ON_HOLD = "ON_HOLD";
+    public static final String SOLD = "SOLD";
+    public static final String RETURNED = "RETURNED";
 
-    public static String getStatus(String status) {
+    public static String fromString(String status) {
         for (String s : getAllStatuses()) {
             if (s.equalsIgnoreCase(status.trim())) {
                 return s;
@@ -17,7 +17,6 @@ public class ProductStatus {
     }
 
     public static String[] getAllStatuses() {
-        return new String[] { REQUESTED, AVAILABLE, ON_HOLD, SOLD, RETURNED
-        };
+        return new String[] { REQUESTED, AVAILABLE, ON_HOLD, SOLD, RETURNED };
     }
 }

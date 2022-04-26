@@ -27,7 +27,6 @@ public class PutOnHoldCommand implements Command {
         String toStatus = ProductStatus.ON_HOLD;
         String successMessage = "Successfully placed the item on hold for the online order.";
         String failMessage = "Failed to placed the item on hold.";
-        CommandUtils.promptProductStatusChange(keyboard, productStorage,
-                possibleFromStatuses, toStatus, successMessage, failMessage);
+        CommandUtils.promptProductStatusChange(keyboard, productStorage, possibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

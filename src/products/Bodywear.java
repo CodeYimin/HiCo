@@ -43,7 +43,9 @@ public class Bodywear extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + " | Weight: " + weightKg + " kg | Size: " + size;
+        return super.toString()
+                + " | Weight: " + weightKg
+                + " kg | Size: " + size;
     }
 
     public static class StorageProcessor implements ProductStorageProcessor {
@@ -61,10 +63,14 @@ public class Bodywear extends Product {
         public String productToString(Product product) {
             Bodywear bodywear = (Bodywear) product;
 
-            return ProductType.BODYWEAR + "," +
-                    bodywear.getId() + "," + bodywear.getStatus() + "," + bodywear.getName() + ","
+            return ProductType.BODYWEAR + ","
+                    + bodywear.getId() + ","
+                    + bodywear.getStatus() + ","
+                    + bodywear.getName() + ","
                     + bodywear.getDescription() + ","
-                    + bodywear.getPrice() + "," + bodywear.getWeightKg() + "," + bodywear.getSize();
+                    + bodywear.getPrice() + ","
+                    + bodywear.getWeightKg() + ","
+                    + bodywear.getSize();
         }
 
         @Override
@@ -79,8 +85,7 @@ public class Bodywear extends Product {
             double weightKg = Double.parseDouble(parts[6]);
             String size = parts[7];
 
-            return new Bodywear(
-                    id, status, name, description, price, weightKg, size);
+            return new Bodywear(id, status, name, description, price, weightKg, size);
         }
     }
 }

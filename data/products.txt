@@ -1,2 +1,3 @@
-Car,2,requested,lamborghini,very fast car,500000.0,50000.0
-Bodywear,1,returned,suit,suit suit,500.0,50.0,xl
+Car,2,REQUESTED,lamborghini,very fast car,500000.0,50000.0
+Bodywear,1,RETURNED,suit,suit suit,500.0,50.0,xl
+Bodywear,3,REQUESTED,Pants,Costco pants,5.5,5.0,L

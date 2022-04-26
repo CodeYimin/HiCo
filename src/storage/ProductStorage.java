@@ -84,7 +84,7 @@ public class ProductStorage {
                 }
             }
             if (!isFiltered) {
-                filteredProducts = ArrayUtils.withNewElement(filteredProducts, product);
+                filteredProducts = ArrayUtils.withElementAdded(filteredProducts, product);
             }
         }
 

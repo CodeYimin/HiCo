@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import core.CommandManager;
@@ -25,9 +26,8 @@ public class RequestCommand implements Command {
         ProductStorage productStorage = commandManager.getProductStorage();
         Scanner keyboard = commandManager.getKeyboard();
 
-        String[] typeOptions = { "car", "bodywear" };
-        String type = InputUtils.promptString(keyboard, "Enter a product type (Car, bodywear): ",
-                typeOptions, false);
+        String[] typeOptions = { "Car", "Bodywear" };
+        String type = InputUtils.promptString(keyboard, "Enter a product type " + Arrays.toString(typeOptions) + ": ", typeOptions, false);
 
         Product newProduct = null;
 

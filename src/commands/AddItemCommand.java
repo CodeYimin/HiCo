@@ -27,7 +27,6 @@ public class AddItemCommand implements Command {
         String toStatus = ProductStatus.AVAILABLE;
         String successMessage = "Successfully made product available.";
         String failMessage = "Failed to make product available.";
-        CommandUtils.promptProductStatusChange(keyboard, productStorage,
-                possibleFromStatuses, toStatus, successMessage, failMessage);
+        CommandUtils.promptProductStatusChange(keyboard, productStorage, possibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

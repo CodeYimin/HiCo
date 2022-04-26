@@ -9,7 +9,7 @@ import utils.CommandUtils;
 
 public class SellCommand implements Command {
     private final String name = "sell";
-    private final String description = "Marks a product as sold and no longer available for purchase.";
+    private final String description = "Remove an item from the inventory. (Mark as sold)";
 
     public String getName() {
         return name;
@@ -26,8 +26,7 @@ public class SellCommand implements Command {
         String[] possibleFromStatuses = { ProductStatus.AVAILABLE, ProductStatus.ON_HOLD };
         String toStatus = ProductStatus.SOLD;
         String successMessage = "Successfully removed the item from the inventory. (Marked as sold)";
-        String failMessage = "Failed to mark product as sold.";
-        CommandUtils.promptProductStatusChange(keyboard, productStorage,
-                possibleFromStatuses, toStatus, successMessage, failMessage);
+        String failMessage = "Failed to remove the item from the inventory.";
+        CommandUtils.promptProductStatusChange(keyboard, productStorage, possibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

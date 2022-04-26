@@ -27,7 +27,6 @@ public class ReturnCommand implements Command {
         String toStatus = ProductStatus.RETURNED;
         String successMessage = "Successfully returned the item to the store.";
         String failMessage = "Failed to return the item to the store.";
-        CommandUtils.promptProductStatusChange(keyboard, productStorage,
-                possibleFromStatuses, toStatus, successMessage, failMessage);
+        CommandUtils.promptProductStatusChange(keyboard, productStorage, possibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

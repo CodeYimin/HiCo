@@ -52,9 +52,13 @@ public class Car extends Product {
         public String productToString(Product product) {
             Car car = (Car) product;
 
-            return ProductType.CAR + "," +
-                    car.getId() + "," + car.getStatus() + "," + car.getName() + "," + car.getDescription() + ","
-                    + car.getPrice() + "," + car.getRangeKm();
+            return ProductType.CAR + ","
+                    + car.getId() + ","
+                    + car.getStatus() + ","
+                    + car.getName() + ","
+                    + car.getDescription() + ","
+                    + car.getPrice() + ","
+                    + car.getRangeKm();
         }
 
         @Override

@@ -4,11 +4,7 @@ public class ProductType {
     public static final String BODYWEAR = "Bodywear";
     public static final String CAR = "Car";
 
-    public static String[] getAllTypes() {
-        return new String[] { BODYWEAR, CAR };
-    }
-
-    public static String getType(String type) {
+    public static String fromString(String type) {
         for (String t : getAllTypes()) {
             if (t.equalsIgnoreCase(type.trim())) {
                 return type;
@@ -17,4 +13,9 @@ public class ProductType {
 
         return null;
     }
+
+    public static String[] getAllTypes() {
+        return new String[] { BODYWEAR, CAR };
+    }
+
 }

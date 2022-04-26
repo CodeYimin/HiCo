@@ -14,7 +14,7 @@ import utils.InputUtils;
 
 public class ListCommand implements Command {
     private final String name = "list";
-    private final String description = "List all products with filters.";
+    private final String description = "Print a list of all products with optional filters and sorting.";
 
     public String getName() {
         return name;
@@ -56,22 +56,22 @@ public class ListCommand implements Command {
         if (status.trim().length() == 0) {
             // Leave filter as null
         } else {
-            statusFilter = new Product.StatusFilter(ProductStatus.getStatus(status));
+            statusFilter = new Product.StatusFilter(ProductStatus.fromString(status));
         }
 
         // TYPE FILTER
         if (type.trim().length() == 0) {
             // Leave filter as null
         } else {
-            typeFilter = new Product.TypeFilter(ProductType.getType(type));
+            typeFilter = new Product.TypeFilter(ProductType.fromString(type));
         }
 
         ProductFilter[] filters = {};
         if (statusFilter != null) {
-            filters = ArrayUtils.withNewElement(filters, statusFilter);
+            filters = ArrayUtils.withElementAdded(filters, statusFilter);
         }
         if (typeFilter != null) {
-            filters = ArrayUtils.withNewElement(filters, typeFilter);
+            filters = ArrayUtils.withElementAdded(filters, typeFilter);
         }
 
         Product[] filteredProducts = productStorage.getProducts(filters);

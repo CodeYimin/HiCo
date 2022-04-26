@@ -12,13 +12,13 @@ public class ArrayUtils {
         return false;
     }
 
-    public static <T> T[] withNewElement(T[] array, T value) {
+    public static <T> T[] withElementAdded(T[] array, T value) {
         T[] newArray = Arrays.copyOf(array, array.length + 1);
         newArray[array.length] = value;
         return newArray;
     }
 
-    public static <T> T[] withRemovedElement(T[] array, T value) {
+    public static <T> T[] withElementRemoved(T[] array, T value) {
         T[] newArray = Arrays.copyOf(array, array.length - 1);
         int newArrayIndex = 0;
         for (T arrayValue : array) {

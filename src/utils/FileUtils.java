@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class FileUtils {
-    public static int getNumLines(File file, String fileName) {
+    private static int getNumLines(File file, String fileName) {
         int numLines = 0;
         try {
             Scanner scanner = new Scanner(file);
@@ -19,6 +19,18 @@ public class FileUtils {
             error.printStackTrace();
         }
         return numLines;
+    }
+
+    private static void writeLines(File file, String[] lines) {
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            for (String line : lines) {
+                writer.println(line);
+            }
+            writer.close();
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
     }
 
     public static String[] readLines(File file) {
@@ -34,18 +46,6 @@ public class FileUtils {
             error.printStackTrace();
         }
         return lines;
-    }
-
-    public static void writeLines(File file, String[] lines) {
-        try {
-            PrintWriter writer = new PrintWriter(file);
-            for (String line : lines) {
-                writer.println(line);
-            }
-            writer.close();
-        } catch (Exception error) {
-            error.printStackTrace();
-        }
     }
 
     public static void addLine(File file, String line) {
@@ -66,7 +66,7 @@ public class FileUtils {
         }
 
         String[] lines = readLines(file);
-        String[] newLines = ArrayUtils.withRemovedElement(lines, line);
+        String[] newLines = ArrayUtils.withElementRemoved(lines, line);
         writeLines(file, newLines);
         return true;
     }
