@@ -63,16 +63,6 @@ public abstract class Product {
         this.status = status;
     }
 
-    public boolean changeStatus(String newStatus) {
-        boolean isValidStatusChange = ProductStatus.isValidStatusChange(status, newStatus);
-        if (!isValidStatusChange) {
-            return false;
-        }
-
-        this.status = newStatus;
-        return true;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this)

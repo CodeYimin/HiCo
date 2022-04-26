@@ -11,7 +11,7 @@ import utils.InputUtils;
 
 public class RequestCommand implements Command {
     private final String name = "request";
-    private final String description = "Request a new product to be added to the store.";
+    private final String description = "Request a new item from the supplier.";
 
     public String getName() {
         return name;

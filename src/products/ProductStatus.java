@@ -20,25 +20,4 @@ public class ProductStatus {
         return new String[] { REQUESTED, AVAILABLE, ON_HOLD, SOLD, RETURNED
         };
     }
-
-    public static boolean isValidStatusChange(String fromStatus, String toStatus) {
-        String[][] validStatusChanges = {
-                { REQUESTED, AVAILABLE },
-                { AVAILABLE, ON_HOLD },
-                { AVAILABLE, SOLD },
-                { ON_HOLD, SOLD },
-                {},
-                { SOLD, AVAILABLE }
-        };
-
-        for (String[] validStatusChange : validStatusChanges) {
-            String validFromStatus = validStatusChange[0];
-            String validToStatus = validStatusChange[1];
-            if (validFromStatus.equalsIgnoreCase(fromStatus) && validToStatus.equalsIgnoreCase(toStatus)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
