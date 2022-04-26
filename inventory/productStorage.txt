@@ -1,0 +1,1 @@
+Bodywear,1,reserved,suit,suit suit,500.0,50.0,xl
