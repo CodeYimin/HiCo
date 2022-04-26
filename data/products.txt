@@ -1,0 +1,2 @@
+Car,2,requested,lamborghini,very fast car,500000.0,50000.0
+Bodywear,1,available,suit,suit suit,500.0,50.0,xl

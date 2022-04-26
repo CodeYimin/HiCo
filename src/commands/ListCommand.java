@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import core.CommandManager;
-import products.Bodywear;
-import products.Car;
 import products.Product;
 import products.ProductFilter;
 import products.ProductStatus;
+import products.ProductType;
 import storage.ProductStorage;
+import utils.ArrayUtils;
 import utils.InputUtils;
 
 public class ListCommand implements Command {
@@ -37,8 +37,8 @@ public class ListCommand implements Command {
             return;
         }
 
-        String[] statusOptions = { "all", "available", "reserved", "requested" };
-        String status = InputUtils.promptString(keyboard, "Status filter (All, available, reserved, requested): ",
+        String[] statusOptions = { "all", "requested", "available", "on_hold", "sold" };
+        String status = InputUtils.promptString(keyboard, "Status filter (All, requested, available, on_hold, sold): ",
                 statusOptions);
 
         String[] typeOptions = { "all", "car", "bodywear" };
@@ -53,24 +53,33 @@ public class ListCommand implements Command {
         // STATUS FILTER
         if (status.equals("all")) {
             // Leave filter as null
+        } else if (status.equals("requested")) {
+            statusFilter = new Product.StatusFilter(ProductStatus.REQUESTED);
         } else if (status.equals("available")) {
             statusFilter = new Product.StatusFilter(ProductStatus.AVAILABLE);
-        } else if (status.equals("reserved")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.RESERVED);
-        } else if (status.equals("requested")) {
-            statusFilter = new Product.StatusFilter(ProductStatus.RESERVED);
+        } else if (status.equals("on_hold")) {
+            statusFilter = new Product.StatusFilter(ProductStatus.ON_HOLD);
+        } else if (status.equals("sold")) {
+            statusFilter = new Product.StatusFilter(ProductStatus.SOLD);
         }
 
         // TYPE FILTER
         if (type.equals("all")) {
             // Leave filter as null
         } else if (type.equals("car")) {
-            typeFilter = new Product.TypeFilter<Car>(Car.class);
+            typeFilter = new Product.TypeFilter(ProductType.CAR);
         } else if (type.equals("bodywear")) {
-            typeFilter = new Product.TypeFilter<Bodywear>(Bodywear.class);
+            typeFilter = new Product.TypeFilter(ProductType.BODYWEAR);
         }
 
-        ProductFilter[] filters = { statusFilter, typeFilter };
+        ProductFilter[] filters = {};
+        if (statusFilter != null) {
+            filters = ArrayUtils.withNewElement(filters, statusFilter);
+        }
+        if (typeFilter != null) {
+            filters = ArrayUtils.withNewElement(filters, typeFilter);
+        }
+
         Product[] filteredProducts = productStorage.getProducts(filters);
 
         // SORT BY
@@ -87,7 +96,7 @@ public class ListCommand implements Command {
             return;
         }
 
-        System.out.println("\nFiltered products: ");
+        System.out.println("Filtered products: ");
         for (Product product : filteredProducts) {
             System.out.println("- " + product);
         }

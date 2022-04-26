@@ -1,1 +1,0 @@
-Bodywear,1,available,suit,suit suit,500.0,50.0,xl

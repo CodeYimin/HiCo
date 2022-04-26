@@ -9,9 +9,9 @@ import products.Product;
 import storage.ProductStorage;
 import utils.InputUtils;
 
-public class AddCommand implements Command {
-    private final String name = "add";
-    private final String description = "Adds a new product to the store.";
+public class RequestCommand implements Command {
+    private final String name = "request";
+    private final String description = "Request a new product to be added to the store.";
 
     public String getName() {
         return name;
@@ -39,6 +39,6 @@ public class AddCommand implements Command {
 
         productStorage.addProduct(newProduct);
 
-        System.out.println("Successfully added new product with ID " + newProduct.getId());
+        System.out.println("Successfully requested new product with ID " + newProduct.getId());
     }
 }

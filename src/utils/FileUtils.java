@@ -60,26 +60,19 @@ public class FileUtils {
         }
     }
 
-    public static void removeLine(File file, String line) {
-        String[] lines = readLines(file);
-        String[] newLines = new String[lines.length - 1];
-        int newLineIndex = 0;
-        for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].equals(line)) {
-                newLines[newLineIndex] = lines[i];
-                newLineIndex++;
-            }
+    public static boolean removeLine(File file, String line) {
+        if (!includesLine(file, line)) {
+            return false;
         }
+
+        String[] lines = readLines(file);
+        String[] newLines = ArrayUtils.withRemovedElement(lines, line);
         writeLines(file, newLines);
+        return true;
     }
 
     public static boolean includesLine(File file, String line) {
         String[] lines = readLines(file);
-        for (String currentLine : lines) {
-            if (currentLine.equals(line)) {
-                return true;
-            }
-        }
-        return false;
+        return ArrayUtils.includes(lines, line);
     }
 }

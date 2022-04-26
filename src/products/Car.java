@@ -24,11 +24,10 @@ public class Car extends Product {
 
     public static Car fromInput(Scanner keyboard) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
-        String[] statusOptions = { ProductStatus.AVAILABLE, ProductStatus.RESERVED, ProductStatus.REQUESTED };
-        String status = InputUtils.promptString(keyboard, "Enter status: ", statusOptions);
+        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: ", 0);
-        double rangeKm = InputUtils.promptDouble(keyboard, "Enter range: ", 0);
+        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
+        double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
 
         return new Car(name, status, description, price, rangeKm);
     }
@@ -41,7 +40,7 @@ public class Car extends Product {
     public static class StorageProcessor implements ProductStorageProcessor {
         @Override
         public boolean canProcessString(String storageString) {
-            return storageString.startsWith("Car");
+            return storageString.startsWith(ProductType.CAR);
         }
 
         @Override
@@ -53,7 +52,7 @@ public class Car extends Product {
         public String productToString(Product product) {
             Car car = (Car) product;
 
-            return "Car" + "," +
+            return ProductType.CAR + "," +
                     car.getId() + "," + car.getStatus() + "," + car.getName() + "," + car.getDescription() + ","
                     + car.getPrice() + "," + car.getRangeKm();
         }

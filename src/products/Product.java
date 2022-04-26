@@ -137,16 +137,22 @@ public abstract class Product {
         }
     }
 
-    public static class TypeFilter<T extends Product> implements ProductFilter {
-        private final Class<T> type;
+    public static class TypeFilter implements ProductFilter {
+        private final String type;
 
-        public TypeFilter(Class<T> type) {
+        public TypeFilter(String type) {
             this.type = type;
         }
 
         @Override
         public boolean accept(Product product) {
-            return type.isInstance(product);
+            if (type.equals(ProductType.CAR)) {
+                return product instanceof Car;
+            } else if (type.equals(ProductType.BODYWEAR)) {
+                return product instanceof Bodywear;
+            } else {
+                return false;
+            }
         }
     }
 }

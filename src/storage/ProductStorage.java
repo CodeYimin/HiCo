@@ -1,10 +1,10 @@
 package storage;
 
 import java.io.File;
-import java.util.Arrays;
 
 import products.Product;
 import products.ProductFilter;
+import utils.ArrayUtils;
 import utils.FileUtils;
 import utils.IdGenerator;
 
@@ -47,14 +47,18 @@ public class ProductStorage {
         FileUtils.addLine(file, productToStorageString(product));
     }
 
-    public Product removeProduct(Product product) {
-        Product productToRemove = getProduct(new Product.IdFilter(product.getId()));
+    public Product removeProduct(int id) {
+        Product productToRemove = getProduct(id);
         if (productToRemove != null) {
             FileUtils.removeLine(file, productToStorageString(productToRemove));
             return productToRemove;
         } else {
             return null;
         }
+    }
+
+    public Product removeProduct(Product product) {
+        return removeProduct(product.getId());
     }
 
     public Product[] getProducts() {
@@ -70,8 +74,7 @@ public class ProductStorage {
 
     public Product[] getProducts(ProductFilter[] filters) {
         Product[] products = getProducts();
-        Product[] filteredProducts = new Product[products.length];
-        int filteredProductsCount = 0;
+        Product[] filteredProducts = {};
 
         for (Product product : products) {
             boolean isFiltered = false;
@@ -81,13 +84,11 @@ public class ProductStorage {
                 }
             }
             if (!isFiltered) {
-                filteredProducts[filteredProductsCount++] = product;
+                filteredProducts = ArrayUtils.withNewElement(filteredProducts, product);
             }
         }
 
-        // Remove empty elements
-        Product[] filteredProductsResult = Arrays.copyOfRange(filteredProducts, 0, filteredProductsCount);
-        return filteredProductsResult;
+        return filteredProducts;
     }
 
     public Product[] getProducts(ProductFilter filter) {
@@ -111,11 +112,15 @@ public class ProductStorage {
         return getProduct(new Product.IdFilter(id));
     }
 
-    public boolean hasProduct(Product product) {
-        return getProduct(new Product.IdFilter(product.getId())) != null;
+    public Product getProduct(Product product) {
+        return getProduct(product.getId());
     }
 
-    public void updateProduct(Product product) {
+    public boolean hasProduct(Product product) {
+        return getProduct(product) != null;
+    }
+
+    public void syncProduct(Product product) {
         if (hasProduct(product)) {
             removeProduct(product);
         }
@@ -130,8 +135,10 @@ public class ProductStorage {
     public String toString() {
         String output = "";
         for (Product product : getProducts()) {
-            output += product + "\n";
+            output += "- " + product + "\n";
         }
+        // Remove last new line character
+        output = output.substring(0, output.length() - 1);
         return output;
     }
 }

@@ -32,11 +32,10 @@ public class Bodywear extends Product {
 
     public static Bodywear fromInput(Scanner keyboard) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
-        String[] statusOptions = { ProductStatus.AVAILABLE, ProductStatus.RESERVED, ProductStatus.REQUESTED };
-        String status = InputUtils.promptString(keyboard, "Enter status: ", statusOptions);
+        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: ", 0);
-        double weightKg = InputUtils.promptDouble(keyboard, "Enter weight: ", 0);
+        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
+        double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
         String size = InputUtils.promptString(keyboard, "Enter size: ");
 
         return new Bodywear(name, status, description, price, weightKg, size);
@@ -50,7 +49,7 @@ public class Bodywear extends Product {
     public static class StorageProcessor implements ProductStorageProcessor {
         @Override
         public boolean canProcessString(String storageString) {
-            return storageString.startsWith("Bodywear");
+            return storageString.startsWith(ProductType.BODYWEAR);
         }
 
         @Override
@@ -62,7 +61,7 @@ public class Bodywear extends Product {
         public String productToString(Product product) {
             Bodywear bodywear = (Bodywear) product;
 
-            return "Bodywear" + "," +
+            return ProductType.BODYWEAR + "," +
                     bodywear.getId() + "," + bodywear.getStatus() + "," + bodywear.getName() + ","
                     + bodywear.getDescription() + ","
                     + bodywear.getPrice() + "," + bodywear.getWeightKg() + "," + bodywear.getSize();

@@ -8,9 +8,9 @@ import products.ProductStatus;
 import storage.ProductStorage;
 import utils.InputUtils;
 
-public class UnreserveCommand implements Command {
-    private final String name = "unreserve";
-    private final String description = "Makes a reserved product available again.";
+public class SoldCommand implements Command {
+    private final String name = "sold";
+    private final String description = "Marks a product as sold and no longer available for purchase.";
 
     public String getName() {
         return name;
@@ -26,15 +26,15 @@ public class UnreserveCommand implements Command {
         int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
 
         Product product = productStorage.getProduct(id);
-        boolean statusChanged = product.changeProductStatus(ProductStatus.AVAILABLE);
+        if (product == null) {
+            System.out.println("Failed to get product with ID " + id);
+        }
 
+        boolean statusChanged = product.changeProductStatus(ProductStatus.SOLD);
         if (statusChanged) {
-            productStorage.updateProduct(product);
-            System.out.println("Successfully unreserved product with ID " + id);
+            System.out.println("Successfully sold product with ID " + id);
         } else {
-            System.out.println("Failed to unreserve product with ID " + id
-                    + ". It probably does not exist or is not reserved.");
+            System.out.println("Failed to sell product with ID " + id);
         }
     }
-
 }
