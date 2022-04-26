@@ -28,7 +28,8 @@ public class Main {
         System.out.println("Welcome to HiCo Inventory Management System! Type \"help\" for a list of commands.");
         Command[] commands = { new ListCommand(), new AddCommand(), new RemoveCommand(),
                 new ReserveCommand(), new UnreserveCommand(), new ExitCommand(), new HelpCommand() };
-        CommandManager commandManager = new CommandManager(commands, productStorage, new Scanner(System.in));
+        Scanner keyboard = new Scanner(System.in);
+        CommandManager commandManager = new CommandManager(commands, productStorage, keyboard);
         commandManager.startListening();
     }
 }

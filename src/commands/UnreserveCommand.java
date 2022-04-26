@@ -3,6 +3,8 @@ package commands;
 import java.util.Scanner;
 
 import core.CommandManager;
+import products.Product;
+import products.ProductStatus;
 import storage.ProductStorage;
 import utils.InputUtils;
 
@@ -23,8 +25,11 @@ public class UnreserveCommand implements Command {
         ProductStorage productStorage = commandManager.getProductStorage();
         int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
 
-        boolean successfullyUnreserved = productStorage.unreserveProduct(id);
-        if (successfullyUnreserved) {
+        Product product = productStorage.getProduct(id);
+        boolean statusChanged = product.changeProductStatus(ProductStatus.AVAILABLE);
+
+        if (statusChanged) {
+            productStorage.updateProduct(product);
             System.out.println("Successfully unreserved product with ID " + id);
         } else {
             System.out.println("Failed to unreserve product with ID " + id

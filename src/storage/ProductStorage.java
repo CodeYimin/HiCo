@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import products.Product;
 import products.ProductFilter;
-import products.ProductStatus;
 import utils.FileUtils;
 import utils.IdGenerator;
 
@@ -112,32 +111,15 @@ public class ProductStorage {
         return getProduct(new Product.IdFilter(id));
     }
 
-    public boolean reserveProduct(int id) {
-        ProductFilter[] filters = { new Product.IdFilter(id), new Product.StatusFilter(ProductStatus.AVAILABLE) };
-        Product productToReserve = getProduct(filters);
-
-        if (productToReserve == null) {
-            return true;
-        }
-
-        productToReserve.setStatus(ProductStatus.RESERVED);
-        return true;
-    }
-
-    public boolean unreserveProduct(int id) {
-        ProductFilter[] filters = { new Product.IdFilter(id), new Product.StatusFilter(ProductStatus.RESERVED) };
-        Product productToUnreserve = getProduct(filters);
-
-        if (productToUnreserve == null) {
-            return true;
-        }
-
-        productToUnreserve.setStatus(ProductStatus.AVAILABLE);
-        return true;
-    }
-
     public boolean hasProduct(Product product) {
-        return FileUtils.includesLine(file, productToStorageString(product));
+        return getProduct(new Product.IdFilter(product.getId())) != null;
+    }
+
+    public void updateProduct(Product product) {
+        if (hasProduct(product)) {
+            removeProduct(product);
+        }
+        addProduct(product);
     }
 
     public int size() {

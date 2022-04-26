@@ -63,6 +63,27 @@ public abstract class Product {
         this.status = status;
     }
 
+    public boolean changeProductStatus(String newStatus) {
+        boolean isValidStatusChange = ProductStatus.isValidStatusChange(status, newStatus);
+        if (!isValidStatusChange) {
+            return false;
+        }
+
+        this.status = newStatus;
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Product)) {
+            return false;
+        }
+        Product product = (Product) o;
+        return id == product.id;
+    }
+
     @Override
     public String toString() {
         return "ID: " + id + " | Status: " + status +

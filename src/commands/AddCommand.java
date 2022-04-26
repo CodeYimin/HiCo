@@ -32,14 +32,12 @@ public class AddCommand implements Command {
         Product newProduct = null;
 
         if (type.equals("car")) {
-            Car car = Car.fromInput(keyboard);
-            productStorage.addProduct(car);
-            newProduct = car;
+            newProduct = Car.fromInput(keyboard);
         } else if (type.equals("bodywear")) {
-            Bodywear bodywear = Bodywear.fromInput(keyboard);
-            productStorage.addProduct(bodywear);
-            newProduct = bodywear;
+            newProduct = Bodywear.fromInput(keyboard);
         }
+
+        productStorage.addProduct(newProduct);
 
         System.out.println("Successfully added new product with ID " + newProduct.getId());
     }
