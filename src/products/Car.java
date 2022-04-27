@@ -8,13 +8,8 @@ import utils.InputUtils;
 public class Car extends Product {
     private double rangeKm;
 
-    public Car(String name, String status, String description, double price, double rangeKm) {
-        super(status, name, description, price);
-        this.rangeKm = rangeKm;
-    }
-
-    public Car(int id, String status, String name, String description, double price, double rangeKm) {
-        super(id, status, name, description, price);
+    public Car(int id, String name, String status, String description, double price, double rangeKm) {
+        super(id, name, status, description, price);
         this.rangeKm = rangeKm;
     }
 
@@ -22,14 +17,13 @@ public class Car extends Product {
         return rangeKm;
     }
 
-    public static Car fromInput(Scanner keyboard) {
+    public static Car fromInput(Scanner keyboard, int id, String status) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
-        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
         double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
         double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
 
-        return new Car(name, status, description, price, rangeKm);
+        return new Car(id, name, status, description, price, rangeKm);
     }
 
     @Override

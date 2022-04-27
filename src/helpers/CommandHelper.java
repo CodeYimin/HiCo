@@ -1,13 +1,15 @@
-package utils;
+package helpers;
 
 import java.util.Scanner;
 
 import products.Product;
 import storage.ProductStorage;
+import utils.ArrayUtils;
+import utils.InputUtils;
 
-public class CommandUtils {
+public class CommandHelper {
     public static Product promptProductStatusChange(Scanner keyboard, ProductStorage productStorage,
-            String[] possibleFromStatuses, String toStatus, String successMessage, String failMessage) {
+            String[] eligibleFromStatuses, String toStatus, String successMessage, String failMessage) {
         int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
 
         Product product = productStorage.getProduct(id);
@@ -16,7 +18,8 @@ public class CommandUtils {
             return null;
         }
 
-        if (ArrayUtils.includes(possibleFromStatuses, product.getStatus())) {
+        boolean fromStatusIsEligible = ArrayUtils.includes(eligibleFromStatuses, product.getStatus());
+        if (fromStatusIsEligible) {
             product.setStatus(toStatus);
             productStorage.syncProduct(product);
             System.out.println(successMessage);

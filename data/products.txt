@@ -1,3 +1,4 @@
-Car,2,REQUESTED,lamborghini,very fast car,500000.0,50000.0
 Bodywear,1,RETURNED,suit,suit suit,500.0,50.0,xl
 Bodywear,3,REQUESTED,Pants,Costco pants,5.5,5.0,L
+Car,4,REQUESTED,Bugatti,Fastest car made by Bugatti,500000.0,50000.0
+Car,2,AVAILABLE,lamborghini,very fast car,500000.0,50000.0

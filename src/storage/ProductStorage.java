@@ -1,28 +1,27 @@
 package storage;
 
-import java.io.File;
-
+import core.FileManager;
 import products.Product;
 import products.ProductFilter;
 import utils.ArrayUtils;
-import utils.FileUtils;
-import utils.IdGenerator;
 
 public class ProductStorage {
-    final File file;
+    final FileManager fileManager;
     final ProductStorageProcessor[] processors;
 
-    public ProductStorage(File file, ProductStorageProcessor[] processors) {
-        this.file = file;
+    public ProductStorage(FileManager fileManager, ProductStorageProcessor[] processors) {
+        this.fileManager = fileManager;
         this.processors = processors;
+    }
 
+    public int getMaxProductId() {
         int maxProductId = 0;
         for (Product product : getProducts()) {
             if (product.getId() > maxProductId) {
                 maxProductId = product.getId();
             }
         }
-        IdGenerator.setLastUsedId(maxProductId);
+        return maxProductId;
     }
 
     public String productToStorageString(Product product) {
@@ -44,13 +43,13 @@ public class ProductStorage {
     }
 
     public void addProduct(Product product) {
-        FileUtils.addLine(file, productToStorageString(product));
+        fileManager.addLine(productToStorageString(product));
     }
 
     public Product removeProduct(int id) {
         Product productToRemove = getProduct(id);
         if (productToRemove != null) {
-            FileUtils.removeLine(file, productToStorageString(productToRemove));
+            fileManager.removeLine(productToStorageString(productToRemove));
             return productToRemove;
         } else {
             return null;
@@ -62,7 +61,7 @@ public class ProductStorage {
     }
 
     public Product[] getProducts() {
-        String[] productStrings = FileUtils.readLines(file);
+        String[] productStrings = fileManager.readLines();
         Product[] products = new Product[productStrings.length];
 
         for (int i = 0; i < productStrings.length; i++) {

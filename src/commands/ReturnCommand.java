@@ -3,9 +3,9 @@ package commands;
 import java.util.Scanner;
 
 import core.CommandManager;
+import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
-import utils.CommandUtils;
 
 public class ReturnCommand implements Command {
     private final String name = "return";
@@ -23,10 +23,10 @@ public class ReturnCommand implements Command {
         Scanner keyboard = commandManager.getKeyboard();
         ProductStorage productStorage = commandManager.getProductStorage();
 
-        String[] possibleFromStatuses = { ProductStatus.SOLD };
+        String[] eligibleFromStatuses = { ProductStatus.SOLD };
         String toStatus = ProductStatus.RETURNED;
         String successMessage = "Successfully returned the item to the store.";
         String failMessage = "Failed to return the item to the store.";
-        CommandUtils.promptProductStatusChange(keyboard, productStorage, possibleFromStatuses, toStatus, successMessage, failMessage);
+        CommandHelper.promptProductStatusChange(keyboard, productStorage, eligibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

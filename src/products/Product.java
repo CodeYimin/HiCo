@@ -2,22 +2,12 @@ package products;
 
 import java.util.Comparator;
 
-import utils.IdGenerator;
-
 public abstract class Product {
     private final int id;
     private String status;
     private String name;
     private String description;
     private double price;
-
-    public Product(String status, String name, String description, double price) {
-        this.id = IdGenerator.generateId();
-        this.status = status;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
 
     public Product(int id, String status, String name, String description, double price) {
         this.id = id;

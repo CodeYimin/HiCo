@@ -7,6 +7,7 @@ import core.CommandManager;
 import products.Bodywear;
 import products.Car;
 import products.Product;
+import products.ProductStatus;
 import storage.ProductStorage;
 import utils.InputUtils;
 
@@ -26,15 +27,17 @@ public class RequestCommand implements Command {
         ProductStorage productStorage = commandManager.getProductStorage();
         Scanner keyboard = commandManager.getKeyboard();
 
+        Product newProduct = null;
+
         String[] typeOptions = { "Car", "Bodywear" };
         String type = InputUtils.promptString(keyboard, "Enter a product type " + Arrays.toString(typeOptions) + ": ", typeOptions, false);
 
-        Product newProduct = null;
+        int newId = productStorage.getMaxProductId() + 1;
 
         if (type.equalsIgnoreCase("car")) {
-            newProduct = Car.fromInput(keyboard);
+            newProduct = Car.fromInput(keyboard, newId, ProductStatus.REQUESTED);
         } else if (type.equalsIgnoreCase("bodywear")) {
-            newProduct = Bodywear.fromInput(keyboard);
+            newProduct = Bodywear.fromInput(keyboard, newId, ProductStatus.REQUESTED);
         }
 
         productStorage.addProduct(newProduct);

@@ -66,7 +66,7 @@ public class InputUtils {
         while (!isValidChoice(response, choices, allowBlank)) {
             System.out.println("Invalid choice. Please enter one of the following: ");
             for (String choice : choices) {
-                System.out.println("\t- " + choice);
+                System.out.println("- " + choice);
             }
             response = promptString(keyboard, prompt);
         }

@@ -9,15 +9,9 @@ public class Bodywear extends Product {
     private double weightKg;
     private String size;
 
-    public Bodywear(int id, String status, String name, String description, double price, double weightKg,
+    public Bodywear(int id, String name, String status, String description, double price, double weightKg,
             String size) {
-        super(id, status, name, description, price);
-        this.weightKg = weightKg;
-        this.size = size;
-    }
-
-    public Bodywear(String name, String status, String description, double price, double weightKg, String size) {
-        super(status, name, description, price);
+        super(id, name, status, description, price);
         this.weightKg = weightKg;
         this.size = size;
     }
@@ -30,15 +24,14 @@ public class Bodywear extends Product {
         return size;
     }
 
-    public static Bodywear fromInput(Scanner keyboard) {
+    public static Bodywear fromInput(Scanner keyboard, int id, String status) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
-        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
         double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
         double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
         String size = InputUtils.promptString(keyboard, "Enter size: ");
 
-        return new Bodywear(name, status, description, price, weightKg, size);
+        return new Bodywear(id, name, status, description, price, weightKg, size);
     }
 
     @Override

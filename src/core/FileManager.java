@@ -1,12 +1,20 @@
-package utils;
+package core;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class FileUtils {
-    private static int getNumLines(File file, String fileName) {
+import utils.ArrayUtils;
+
+public class FileManager {
+    private final File file;
+
+    public FileManager(File file) {
+        this.file = file;
+    }
+
+    private int getNumLines() {
         int numLines = 0;
         try {
             Scanner scanner = new Scanner(file);
@@ -21,7 +29,7 @@ public class FileUtils {
         return numLines;
     }
 
-    private static void writeLines(File file, String[] lines) {
+    private void writeLines(String[] lines) {
         try {
             PrintWriter writer = new PrintWriter(file);
             for (String line : lines) {
@@ -33,8 +41,8 @@ public class FileUtils {
         }
     }
 
-    public static String[] readLines(File file) {
-        int numLines = getNumLines(file, file.getName());
+    public String[] readLines() {
+        int numLines = getNumLines();
         String[] lines = new String[numLines];
         try {
             Scanner scanner = new Scanner(file);
@@ -48,7 +56,7 @@ public class FileUtils {
         return lines;
     }
 
-    public static void addLine(File file, String line) {
+    public void addLine(String line) {
         final boolean APPEND = true;
         try {
             FileWriter fileWriter = new FileWriter(file, APPEND);
@@ -60,19 +68,19 @@ public class FileUtils {
         }
     }
 
-    public static boolean removeLine(File file, String line) {
-        if (!includesLine(file, line)) {
+    public boolean includesLine(String line) {
+        String[] lines = readLines();
+        return ArrayUtils.includes(lines, line);
+    }
+
+    public boolean removeLine(String line) {
+        if (!includesLine(line)) {
             return false;
         }
 
-        String[] lines = readLines(file);
+        String[] lines = readLines();
         String[] newLines = ArrayUtils.withElementRemoved(lines, line);
-        writeLines(file, newLines);
+        writeLines(newLines);
         return true;
-    }
-
-    public static boolean includesLine(File file, String line) {
-        String[] lines = readLines(file);
-        return ArrayUtils.includes(lines, line);
     }
 }

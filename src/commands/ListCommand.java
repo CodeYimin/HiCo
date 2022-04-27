@@ -14,7 +14,7 @@ import utils.InputUtils;
 
 public class ListCommand implements Command {
     private final String name = "list";
-    private final String description = "Print a list of all products with optional filters and sorting.";
+    private final String description = "Print a list of all products with optional filtering/sorting.";
 
     public String getName() {
         return name;
@@ -38,30 +38,30 @@ public class ListCommand implements Command {
         }
 
         String[] statusOptions = ProductStatus.getAllStatuses();
-        String status = InputUtils.promptString(keyboard, "Status filter " + Arrays.toString(statusOptions) + ": ",
+        String status = InputUtils.promptString(keyboard, "(Enter to skip) Status filter " + Arrays.toString(statusOptions) + ": ",
                 statusOptions, true);
 
         String[] typeOptions = ProductType.getAllTypes();
-        String type = InputUtils.promptString(keyboard, "Type filter " + Arrays.toString(typeOptions) + ": ",
+        String type = InputUtils.promptString(keyboard, "(Enter to skip) Type filter " + Arrays.toString(typeOptions) + ": ",
                 typeOptions, true);
 
         String[] sortByOptions = { "id", "name", "price" };
-        String sortBy = InputUtils.promptString(keyboard, "Sort by " + Arrays.toString(sortByOptions) + ": ",
-                sortByOptions, false);
+        String sortBy = InputUtils.promptString(keyboard, "(Enter to skip) Sort by " + Arrays.toString(sortByOptions) + ": ",
+                sortByOptions, true);
 
-        ProductFilter statusFilter = null;
-        ProductFilter typeFilter = null;
+        ProductFilter statusFilter;
+        ProductFilter typeFilter;
 
         // STATUS FILTER
         if (status.trim().length() == 0) {
-            // Leave filter as null
+            statusFilter = null;
         } else {
             statusFilter = new Product.StatusFilter(ProductStatus.fromString(status));
         }
 
         // TYPE FILTER
         if (type.trim().length() == 0) {
-            // Leave filter as null
+            typeFilter = null;
         } else {
             typeFilter = new Product.TypeFilter(ProductType.fromString(type));
         }
@@ -83,6 +83,8 @@ public class ListCommand implements Command {
             Arrays.sort(filteredProducts, new Product.NameComparator());
         } else if (sortBy.equalsIgnoreCase("id")) {
             Arrays.sort(filteredProducts, new Product.IdComparator());
+        } else {
+            // Do nothing, don't sort
         }
 
         if (filteredProducts.length == 0) {
