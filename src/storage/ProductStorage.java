@@ -50,15 +50,24 @@ public class ProductStorage {
         return null;
     }
 
-    public void addProduct(Product product) {
+    public boolean addProduct(Product product) {
         String storageString = encodeProduct(product);
-        fileManager.addLine(storageString);
+        try {
+            fileManager.addLine(storageString);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public Product removeProduct(int id) {
         Product productToRemove = getProduct(id);
-        if (productToRemove != null) {
-            fileManager.removeLine(encodeProduct(productToRemove));
+        if (productToRemove == null) {
+            return null;
+        }
+
+        boolean successfullyRemovedFromFile = fileManager.removeLine(encodeProduct(productToRemove));
+        if (successfullyRemovedFromFile) {
             return productToRemove;
         } else {
             return null;
@@ -70,7 +79,13 @@ public class ProductStorage {
     }
 
     public Product[] getProducts() {
-        String[] productStrings = fileManager.readLines();
+        String[] productStrings;
+        try {
+            productStrings = fileManager.readLines();
+        } catch (Exception error) {
+            return new Product[0];
+        }
+
         Product[] products = new Product[productStrings.length];
 
         for (int i = 0; i < productStrings.length; i++) {
@@ -92,7 +107,7 @@ public class ProductStorage {
                 }
             }
             if (!isFiltered) {
-                filteredProducts = ArrayUtils.withElementAdded(filteredProducts, product);
+                filteredProducts = ArrayUtils.withElement(filteredProducts, product);
             }
         }
 
@@ -128,11 +143,12 @@ public class ProductStorage {
         return getProduct(product) != null;
     }
 
-    public void syncProduct(Product product) {
-        if (hasProduct(product)) {
-            removeProduct(product);
+    public boolean syncProduct(Product product) {
+        if (removeProduct(product) != null) {
+            return addProduct(product);
+        } else {
+            return false;
         }
-        addProduct(product);
     }
 
     public int size() {

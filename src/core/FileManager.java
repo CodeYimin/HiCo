@@ -14,57 +14,55 @@ public class FileManager {
         this.file = file;
     }
 
-    private int getNumLines() {
+    private int getNumLines() throws Exception {
         int numLines = 0;
-        try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                scanner.nextLine();
-                numLines++;
-            }
-            scanner.close();
-        } catch (Exception error) {
-            error.printStackTrace();
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            scanner.nextLine();
+            numLines++;
         }
+        scanner.close();
         return numLines;
     }
 
-    private void writeLines(String[] lines) {
+    private boolean writeLines(String[] lines) {
         try {
             PrintWriter writer = new PrintWriter(file);
             for (String line : lines) {
                 writer.println(line);
             }
             writer.close();
+            return true;
         } catch (Exception error) {
-            error.printStackTrace();
+            return false;
         }
     }
 
     public String[] readLines() {
-        int numLines = getNumLines();
-        String[] lines = new String[numLines];
         try {
+            int numLines = getNumLines();
+            String[] lines = new String[numLines];
             Scanner scanner = new Scanner(file);
             for (int i = 0; i < numLines; i++) {
                 lines[i] = scanner.nextLine();
             }
             scanner.close();
+            return lines;
         } catch (Exception error) {
-            error.printStackTrace();
+            return new String[0];
         }
-        return lines;
     }
 
-    public void addLine(String line) {
+    public boolean addLine(String line) {
         final boolean APPEND = true;
         try {
             FileWriter fileWriter = new FileWriter(file, APPEND);
             PrintWriter writer = new PrintWriter(fileWriter);
             writer.println(line);
             writer.close();
+            return true;
         } catch (Exception error) {
-            error.printStackTrace();
+            return false;
         }
     }
 
@@ -79,8 +77,11 @@ public class FileManager {
         }
 
         String[] lines = readLines();
-        String[] newLines = ArrayUtils.withElementRemoved(lines, line);
-        writeLines(newLines);
-        return true;
+        if (lines.length == 0) {
+            return false;
+        }
+
+        lines = ArrayUtils.withoutElement(lines, line);
+        return writeLines(lines);
     }
 }

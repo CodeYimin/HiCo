@@ -54,11 +54,11 @@ public class ListCommand extends ProductStorageCommand {
         ProductFilter[] filters = {};
         if (status != null) {
             ProductFilter statusFilter = new Product.StatusFilter(status);
-            filters = ArrayUtils.withElementAdded(filters, statusFilter);
+            filters = ArrayUtils.withElement(filters, statusFilter);
         }
         if (type != null) {
             ProductFilter typeFilter = new Product.TypeFilter(type);
-            filters = ArrayUtils.withElementAdded(filters, typeFilter);
+            filters = ArrayUtils.withElement(filters, typeFilter);
         }
         Product[] filteredProducts = productStorage.getProducts(filters);
 

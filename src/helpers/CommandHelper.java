@@ -19,14 +19,19 @@ public class CommandHelper {
         }
 
         boolean fromStatusIsEligible = ArrayUtils.includes(eligibleFromStatuses, product.getStatus());
-        if (fromStatusIsEligible) {
-            product.setStatus(toStatus);
-            productStorage.syncProduct(product);
-            System.out.println(successMessage);
-            return product;
-        } else {
+        if (!fromStatusIsEligible) {
             System.out.println(failMessage);
             return null;
         }
+
+        product.setStatus(toStatus);
+        boolean successfullySyncedToStorage = productStorage.syncProduct(product);
+        if (!successfullySyncedToStorage) {
+            System.out.println(failMessage);
+            return null;
+        }
+
+        System.out.println(successMessage);
+        return product;
     }
 }

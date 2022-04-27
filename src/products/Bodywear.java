@@ -36,8 +36,8 @@ public class Bodywear extends Product {
         String[] storageData = {
                 ProductType.ELECTRONIC,
                 String.valueOf(getId()),
-                getName(),
                 getStatus(),
+                getName(),
                 getDescription(),
                 String.valueOf(getPrice()),
                 String.valueOf(getWeightKg()),

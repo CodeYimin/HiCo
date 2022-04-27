@@ -39,9 +39,14 @@ public class RequestCommand extends ProductStorageCommand {
         if (newProduct == null) {
             System.out.println("Failed to create a new product.");
             return;
-        } else {
-            productStorage.addProduct(newProduct);
-            System.out.println("Successfully requested new product with ID " + newProduct.getId());
         }
+
+        boolean successfullyAddedProduct = productStorage.addProduct(newProduct);
+        if (!successfullyAddedProduct) {
+            System.out.println("Failed to add product to storage.");
+            return;
+        }
+
+        System.out.println("Successfully requested new product with ID " + newProduct.getId());
     }
 }
