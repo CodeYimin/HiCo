@@ -1,4 +1,4 @@
-package storage;
+package products.creators;
 
 import java.util.Scanner;
 

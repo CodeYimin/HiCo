@@ -13,11 +13,11 @@ import commands.ReturnCommand;
 import commands.SellCommand;
 import core.CommandManager;
 import core.FileManager;
-import products.Bodywear;
-import products.Car;
-import products.Electronic;
-import storage.ProductCreator;
-import storage.ProductStorage;
+import core.ProductStorage;
+import products.creators.BodywearCreator;
+import products.creators.CarCreator;
+import products.creators.ElectronicCreator;
+import products.creators.ProductCreator;
 
 public class Main {
     private static final String PRODUCT_STORAGE_FILE_PATH = "C:/Users/Yimin/Documents/Programming/Java/Grade 11/Assignments/HiCo/data/test.txt";
@@ -26,9 +26,9 @@ public class Main {
         File productStorageFile = new File(PRODUCT_STORAGE_FILE_PATH);
         FileManager productStorageFileManager = new FileManager(productStorageFile);
         ProductCreator[] productCreators = {
-                new Bodywear.Creator(),
-                new Car.Creator(),
-                new Electronic.Creator()
+                new BodywearCreator(),
+                new CarCreator(),
+                new ElectronicCreator()
         };
         ProductStorage productStorage = new ProductStorage(productStorageFileManager, productCreators);
 

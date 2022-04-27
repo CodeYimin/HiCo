@@ -1,4 +1,4 @@
-package products;
+package products.constants;
 
 public class ProductStatus {
     public static final String REQUESTED = "REQUESTED";

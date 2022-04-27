@@ -1,4 +1,4 @@
-package products;
+package products.constants;
 
 public class ProductType {
     public static final String BODYWEAR = "Bodywear";

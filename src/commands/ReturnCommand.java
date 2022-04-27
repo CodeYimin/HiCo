@@ -2,12 +2,12 @@ package commands;
 
 import java.util.Scanner;
 
+import commands.helpers.CommandHelper;
 import core.CommandManager;
-import helpers.CommandHelper;
-import products.ProductStatus;
-import storage.ProductStorage;
+import core.ProductStorage;
+import products.constants.ProductStatus;
 
-public class ReturnCommand extends ProductStorageCommand {
+public class ReturnCommand extends ProductCommand {
     public ReturnCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
     }

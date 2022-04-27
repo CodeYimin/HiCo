@@ -4,15 +4,20 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import core.CommandManager;
+import core.ProductStorage;
 import products.Product;
-import products.ProductFilter;
-import products.ProductStatus;
-import products.ProductType;
-import storage.ProductStorage;
+import products.comparators.ProductIdComparator;
+import products.comparators.ProductNameComparator;
+import products.comparators.ProductPriceComparator;
+import products.constants.ProductStatus;
+import products.constants.ProductType;
+import products.filters.ProductFilter;
+import products.filters.ProductStatusFilter;
+import products.filters.ProductTypeFilter;
 import utils.ArrayUtils;
 import utils.InputUtils;
 
-public class ListCommand extends ProductStorageCommand {
+public class ListCommand extends ProductCommand {
     public ListCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
     }
@@ -59,11 +64,11 @@ public class ListCommand extends ProductStorageCommand {
         // Set filters
         ProductFilter[] filters = {};
         if (status != null) {
-            ProductFilter statusFilter = new Product.StatusFilter(status);
+            ProductFilter statusFilter = new ProductStatusFilter(status);
             filters = ArrayUtils.withElement(filters, statusFilter);
         }
         if (type != null) {
-            ProductFilter typeFilter = new Product.TypeFilter(type);
+            ProductFilter typeFilter = new ProductTypeFilter(type);
             filters = ArrayUtils.withElement(filters, typeFilter);
         }
 
@@ -78,11 +83,11 @@ public class ListCommand extends ProductStorageCommand {
 
         // Apply sort to filtered products
         if (sort.equalsIgnoreCase("price")) {
-            Arrays.sort(filteredProducts, new Product.PriceComparator());
+            Arrays.sort(filteredProducts, new ProductPriceComparator());
         } else if (sort.equalsIgnoreCase("name")) {
-            Arrays.sort(filteredProducts, new Product.NameComparator());
+            Arrays.sort(filteredProducts, new ProductNameComparator());
         } else if (sort.equalsIgnoreCase("id")) {
-            Arrays.sort(filteredProducts, new Product.IdComparator());
+            Arrays.sort(filteredProducts, new ProductIdComparator());
         } else {
             // Do nothing (don't sort)
         }

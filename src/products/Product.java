@@ -1,7 +1,5 @@
 package products;
 
-import java.util.Comparator;
-
 public abstract class Product {
     private final int id;
     private String status;
@@ -70,73 +68,5 @@ public abstract class Product {
     public String toString() {
         return "ID: " + id + " | Status: " + status +
                 " | Name: " + name + " | Description: " + description + " | Price: $" + price;
-    }
-
-    public static class PriceComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product p1, Product p2) {
-            return Double.compare(p1.getPrice(), p2.getPrice());
-        }
-    }
-
-    public static class NameComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product p1, Product p2) {
-            return p1.getName().compareTo(p2.getName());
-        }
-    }
-
-    public static class IdComparator implements Comparator<Product> {
-        @Override
-        public int compare(Product p1, Product p2) {
-            return Integer.compare(p1.getId(), p2.getId());
-        }
-    }
-
-    public static class IdFilter implements ProductFilter {
-        private final int id;
-
-        public IdFilter(int id) {
-            this.id = id;
-        }
-
-        @Override
-        public boolean accept(Product product) {
-            return product.getId() == id;
-        }
-    }
-
-    public static class StatusFilter implements ProductFilter {
-        private final String status;
-
-        public StatusFilter(String status) {
-            this.status = status;
-        }
-
-        @Override
-        public boolean accept(Product product) {
-            return product.getStatus().equalsIgnoreCase(status);
-        }
-    }
-
-    public static class TypeFilter implements ProductFilter {
-        private final String type;
-
-        public TypeFilter(String type) {
-            this.type = type;
-        }
-
-        @Override
-        public boolean accept(Product product) {
-            if (type.equals(ProductType.CAR)) {
-                return product instanceof Car;
-            } else if (type.equals(ProductType.BODYWEAR)) {
-                return product instanceof Bodywear;
-            } else if (type.equals(ProductType.ELECTRONIC)) {
-                return product instanceof Electronic;
-            } else {
-                return false;
-            }
-        }
     }
 }

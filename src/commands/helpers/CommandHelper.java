@@ -1,9 +1,9 @@
-package helpers;
+package commands.helpers;
 
 import java.util.Scanner;
 
+import core.ProductStorage;
 import products.Product;
-import storage.ProductStorage;
 import utils.ArrayUtils;
 import utils.InputUtils;
 

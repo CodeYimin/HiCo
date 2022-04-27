@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import core.CommandManager;
+import core.ProductStorage;
 import products.Product;
-import products.ProductType;
-import storage.ProductCreator;
-import storage.ProductStorage;
+import products.constants.ProductType;
+import products.creators.ProductCreator;
 import utils.InputUtils;
 
-public class RequestCommand extends ProductStorageCommand {
+public class RequestCommand extends ProductCommand {
     private final ProductCreator[] productCreators;
 
     public RequestCommand(String name, String description, ProductStorage productStorage, ProductCreator[] productCreators) {

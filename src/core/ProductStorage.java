@@ -1,8 +1,9 @@
-package storage;
+package core;
 
-import core.FileManager;
 import products.Product;
-import products.ProductFilter;
+import products.creators.ProductCreator;
+import products.filters.ProductFilter;
+import products.filters.ProductIdFilter;
 import utils.ArrayUtils;
 
 public class ProductStorage {
@@ -126,7 +127,7 @@ public class ProductStorage {
     }
 
     public Product getProduct(int id) throws Exception {
-        return getProduct(new Product.IdFilter(id));
+        return getProduct(new ProductIdFilter(id));
     }
 
     public Product getProduct(Product product) throws Exception {

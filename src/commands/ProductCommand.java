@@ -1,11 +1,11 @@
 package commands;
 
-import storage.ProductStorage;
+import core.ProductStorage;
 
-public abstract class ProductStorageCommand extends Command {
+public abstract class ProductCommand extends Command {
     private final ProductStorage productStorage;
 
-    public ProductStorageCommand(String name, String description, ProductStorage productStorage) {
+    public ProductCommand(String name, String description, ProductStorage productStorage) {
         super(name, description);
         this.productStorage = productStorage;
     }
