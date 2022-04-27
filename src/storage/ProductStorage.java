@@ -7,11 +7,11 @@ import utils.ArrayUtils;
 
 public class ProductStorage {
     final FileManager fileManager;
-    final ProductStorageProcessor[] processors;
+    final ProductStorageConverter[] converters;
 
-    public ProductStorage(FileManager fileManager, ProductStorageProcessor[] processors) {
+    public ProductStorage(FileManager fileManager, ProductStorageConverter[] converters) {
         this.fileManager = fileManager;
-        this.processors = processors;
+        this.converters = converters;
     }
 
     public int getMaxProductId() {
@@ -24,19 +24,19 @@ public class ProductStorage {
         return maxProductId;
     }
 
-    public String productToStorageString(Product product) {
-        for (ProductStorageProcessor processor : processors) {
-            if (processor.canProcessProduct(product)) {
-                return processor.productToString(product);
+    private String productToStorageString(Product product) {
+        for (ProductStorageConverter processor : converters) {
+            if (processor.canConvertProduct(product)) {
+                return processor.convertProduct(product);
             }
         }
         return null;
     }
 
-    public Product storageStringToProduct(String storageString) {
-        for (ProductStorageProcessor processor : processors) {
-            if (processor.canProcessString(storageString)) {
-                return processor.stringToProduct(storageString);
+    private Product storageStringToProduct(String storageString) {
+        for (ProductStorageConverter processor : converters) {
+            if (processor.canConvertString(storageString)) {
+                return processor.convertString(storageString);
             }
         }
         return null;

@@ -16,14 +16,14 @@ import core.FileManager;
 import products.Bodywear;
 import products.Car;
 import storage.ProductStorage;
-import storage.ProductStorageProcessor;
+import storage.ProductStorageConverter;
 
 public class Main {
     private static final String PRODUCT_STORAGE_FILE_PATH = "../data/products.txt";
 
     public static void main(String[] args) throws Exception {
         FileManager productStorageFileManager = new FileManager(new File(PRODUCT_STORAGE_FILE_PATH));
-        ProductStorageProcessor[] productStorageProcessors = { new Bodywear.StorageProcessor(), new Car.StorageProcessor() };
+        ProductStorageConverter[] productStorageProcessors = { new Bodywear.StorageProcessor(), new Car.StorageProcessor() };
         ProductStorage productStorage = new ProductStorage(productStorageFileManager, productStorageProcessors);
 
         Command[] commands = {

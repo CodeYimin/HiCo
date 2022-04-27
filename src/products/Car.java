@@ -2,7 +2,7 @@ package products;
 
 import java.util.Scanner;
 
-import storage.ProductStorageProcessor;
+import storage.ProductStorageConverter;
 import utils.InputUtils;
 
 public class Car extends Product {
@@ -17,8 +17,9 @@ public class Car extends Product {
         return rangeKm;
     }
 
-    public static Car fromInput(Scanner keyboard, int id, String status) {
+    public static Car fromInput(Scanner keyboard, int id) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
+        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
         double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
         double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
@@ -31,19 +32,19 @@ public class Car extends Product {
         return super.toString() + " | Range: " + rangeKm + " km";
     }
 
-    public static class StorageProcessor implements ProductStorageProcessor {
+    public static class StorageProcessor implements ProductStorageConverter {
         @Override
-        public boolean canProcessString(String storageString) {
+        public boolean canConvertString(String storageString) {
             return storageString.startsWith(ProductType.CAR);
         }
 
         @Override
-        public boolean canProcessProduct(Product product) {
+        public boolean canConvertProduct(Product product) {
             return product instanceof Car;
         }
 
         @Override
-        public String productToString(Product product) {
+        public String convertProduct(Product product) {
             Car car = (Car) product;
 
             return ProductType.CAR + ","
@@ -56,7 +57,7 @@ public class Car extends Product {
         }
 
         @Override
-        public Product stringToProduct(String storageString) {
+        public Product convertString(String storageString) {
             String[] parts = storageString.split(",");
 
             int id = Integer.parseInt(parts[1]);

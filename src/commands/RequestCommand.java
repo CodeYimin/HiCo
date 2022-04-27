@@ -7,7 +7,6 @@ import core.CommandManager;
 import products.Bodywear;
 import products.Car;
 import products.Product;
-import products.ProductStatus;
 import storage.ProductStorage;
 import utils.InputUtils;
 
@@ -35,9 +34,9 @@ public class RequestCommand implements Command {
         int newId = productStorage.getMaxProductId() + 1;
 
         if (type.equalsIgnoreCase("car")) {
-            newProduct = Car.fromInput(keyboard, newId, ProductStatus.REQUESTED);
+            newProduct = Car.fromInput(keyboard, newId);
         } else if (type.equalsIgnoreCase("bodywear")) {
-            newProduct = Bodywear.fromInput(keyboard, newId, ProductStatus.REQUESTED);
+            newProduct = Bodywear.fromInput(keyboard, newId);
         }
 
         productStorage.addProduct(newProduct);

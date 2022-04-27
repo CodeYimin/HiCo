@@ -32,7 +32,7 @@ public class ListCommand implements Command {
         String useFilters = keyboard.nextLine();
 
         if (!useFilters.equalsIgnoreCase("y")) {
-            System.out.println("Entire inventory: ");
+            System.out.println("All products: ");
             System.out.println(productStorage);
             return;
         }

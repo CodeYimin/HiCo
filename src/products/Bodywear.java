@@ -2,7 +2,7 @@ package products;
 
 import java.util.Scanner;
 
-import storage.ProductStorageProcessor;
+import storage.ProductStorageConverter;
 import utils.InputUtils;
 
 public class Bodywear extends Product {
@@ -24,8 +24,9 @@ public class Bodywear extends Product {
         return size;
     }
 
-    public static Bodywear fromInput(Scanner keyboard, int id, String status) {
+    public static Bodywear fromInput(Scanner keyboard, int id) {
         String name = InputUtils.promptString(keyboard, "Enter name: ");
+        String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter description: ");
         double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
         double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
@@ -41,19 +42,19 @@ public class Bodywear extends Product {
                 + " kg | Size: " + size;
     }
 
-    public static class StorageProcessor implements ProductStorageProcessor {
+    public static class StorageProcessor implements ProductStorageConverter {
         @Override
-        public boolean canProcessString(String storageString) {
+        public boolean canConvertString(String storageString) {
             return storageString.startsWith(ProductType.BODYWEAR);
         }
 
         @Override
-        public boolean canProcessProduct(Product product) {
+        public boolean canConvertProduct(Product product) {
             return product instanceof Bodywear;
         }
 
         @Override
-        public String productToString(Product product) {
+        public String convertProduct(Product product) {
             Bodywear bodywear = (Bodywear) product;
 
             return ProductType.BODYWEAR + ","
@@ -67,7 +68,7 @@ public class Bodywear extends Product {
         }
 
         @Override
-        public Product stringToProduct(String storageString) {
+        public Product convertString(String storageString) {
             String[] parts = storageString.split(",");
 
             int id = Integer.parseInt(parts[1]);
