@@ -37,4 +37,23 @@ public class ArrayUtils {
         }
         return newArray;
     }
+
+    public static String[] replaceAll(String[] array, String oldValue, String newValue) {
+        String[] newArray = Arrays.copyOf(array, array.length);
+        for (int i = 0; i < array.length; i++) {
+            newArray[i] = array[i].replaceAll(oldValue, newValue);
+        }
+        return newArray;
+    }
+
+    public static String join(String[] array, String separator) {
+        String string = "";
+        for (int i = 0; i < array.length; i++) {
+            string += array[i];
+            if (i < array.length - 1) {
+                string += separator;
+            }
+        }
+        return string;
+    }
 }

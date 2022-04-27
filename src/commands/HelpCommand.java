@@ -2,16 +2,9 @@ package commands;
 
 import core.CommandManager;
 
-public class HelpCommand implements Command {
-    private final String name = "help";
-    private final String description = "Displays this help command.";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class HelpCommand extends Command {
+    public HelpCommand(String name, String description) {
+        super(name, description);
     }
 
     public void execute(CommandManager commandManager) {

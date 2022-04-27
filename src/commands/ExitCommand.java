@@ -2,16 +2,9 @@ package commands;
 
 import core.CommandManager;
 
-public class ExitCommand implements Command {
-    private final String name = "exit";
-    private final String description = "Exit the program.";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class ExitCommand extends Command {
+    public ExitCommand(String name, String description) {
+        super(name, description);
     }
 
     public void execute(CommandManager commandManager) {

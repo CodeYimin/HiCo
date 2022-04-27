@@ -7,21 +7,14 @@ import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
 
-public class PutOnHoldCommand implements Command {
-    private final String name = "putOnHold";
-    private final String description = "Place an item on hold for online orders.";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class PutOnHoldCommand extends ProductStorageCommand {
+    public PutOnHoldCommand(String name, String description, ProductStorage productStorage) {
+        super(name, description, productStorage);
     }
 
     public void execute(CommandManager commandManager) {
         Scanner keyboard = commandManager.getKeyboard();
-        ProductStorage productStorage = commandManager.getProductStorage();
+        ProductStorage productStorage = getProductStorage();
 
         String[] eligibleFromStatuses = { ProductStatus.AVAILABLE };
         String toStatus = ProductStatus.ON_HOLD;

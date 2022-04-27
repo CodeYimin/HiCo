@@ -7,11 +7,11 @@ import utils.ArrayUtils;
 
 public class ProductStorage {
     final FileManager fileManager;
-    final ProductStorageConverter[] converters;
+    final ProductCreator[] productCreators;
 
-    public ProductStorage(FileManager fileManager, ProductStorageConverter[] converters) {
+    public ProductStorage(FileManager fileManager, ProductCreator[] productCreators) {
         this.fileManager = fileManager;
-        this.converters = converters;
+        this.productCreators = productCreators;
     }
 
     public int getMaxProductId() {
@@ -24,32 +24,41 @@ public class ProductStorage {
         return maxProductId;
     }
 
-    private String productToStorageString(Product product) {
-        for (ProductStorageConverter processor : converters) {
-            if (processor.canConvertProduct(product)) {
-                return processor.convertProduct(product);
-            }
-        }
-        return null;
+    private static String encodeData(String[] data) {
+        String[] encodedData = ArrayUtils.replaceAll(data, ",", "\\,");
+        String encodedString = ArrayUtils.join(encodedData, ",");
+        return encodedString;
     }
 
-    private Product storageStringToProduct(String storageString) {
-        for (ProductStorageConverter processor : converters) {
-            if (processor.canConvertString(storageString)) {
-                return processor.convertString(storageString);
+    private static String[] decodeData(String data) {
+        String[] decodedData = data.split("(?<!\\\\),");
+        decodedData = ArrayUtils.replaceAll(decodedData, "\\\\,", ",");
+        return decodedData;
+    }
+
+    private String encodeProduct(Product product) {
+        return encodeData(product.toStorageData());
+    }
+
+    private Product decodeProduct(String storageString) {
+        String[] storageData = decodeData(storageString);
+        for (ProductCreator productCreator : productCreators) {
+            if (productCreator.canCreateFromStorageData(storageData)) {
+                return productCreator.createFromStorageData(storageData);
             }
         }
         return null;
     }
 
     public void addProduct(Product product) {
-        fileManager.addLine(productToStorageString(product));
+        String storageString = encodeProduct(product);
+        fileManager.addLine(storageString);
     }
 
     public Product removeProduct(int id) {
         Product productToRemove = getProduct(id);
         if (productToRemove != null) {
-            fileManager.removeLine(productToStorageString(productToRemove));
+            fileManager.removeLine(encodeProduct(productToRemove));
             return productToRemove;
         } else {
             return null;
@@ -65,7 +74,7 @@ public class ProductStorage {
         Product[] products = new Product[productStrings.length];
 
         for (int i = 0; i < productStrings.length; i++) {
-            products[i] = storageStringToProduct(productStrings[i]);
+            products[i] = decodeProduct(productStrings[i]);
         }
 
         return products;

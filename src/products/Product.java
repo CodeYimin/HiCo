@@ -53,6 +53,8 @@ public abstract class Product {
         this.status = status;
     }
 
+    public abstract String[] toStorageData();
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -126,10 +128,12 @@ public abstract class Product {
 
         @Override
         public boolean accept(Product product) {
-            if (type.equalsIgnoreCase(ProductType.CAR)) {
+            if (type.equals(ProductType.CAR)) {
                 return product instanceof Car;
-            } else if (type.equalsIgnoreCase(ProductType.BODYWEAR)) {
+            } else if (type.equals(ProductType.BODYWEAR)) {
                 return product instanceof Bodywear;
+            } else if (type.equals(ProductType.ELECTRONIC)) {
+                return product instanceof Electronic;
             } else {
                 return false;
             }

@@ -4,43 +4,44 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import core.CommandManager;
-import products.Bodywear;
-import products.Car;
 import products.Product;
+import products.ProductType;
+import storage.ProductCreator;
 import storage.ProductStorage;
 import utils.InputUtils;
 
-public class RequestCommand implements Command {
-    private final String name = "request";
-    private final String description = "Request a new item from the supplier.";
+public class RequestCommand extends ProductStorageCommand {
+    private final ProductCreator[] productCreators;
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+    public RequestCommand(String name, String description, ProductStorage productStorage, ProductCreator[] productCreators) {
+        super(name, description, productStorage);
+        this.productCreators = productCreators;
     }
 
     public void execute(CommandManager commandManager) {
-        ProductStorage productStorage = commandManager.getProductStorage();
         Scanner keyboard = commandManager.getKeyboard();
+        ProductStorage productStorage = getProductStorage();
 
         Product newProduct = null;
-
-        String[] typeOptions = { "Car", "Bodywear" };
-        String type = InputUtils.promptString(keyboard, "Enter a product type " + Arrays.toString(typeOptions) + ": ", typeOptions, false);
-
         int newId = productStorage.getMaxProductId() + 1;
 
-        if (type.equalsIgnoreCase("car")) {
-            newProduct = Car.fromInput(keyboard, newId);
-        } else if (type.equalsIgnoreCase("bodywear")) {
-            newProduct = Bodywear.fromInput(keyboard, newId);
+        String[] typeOptions = ProductType.getAllTypes();
+        String typePrompt = "Enter a product type " + Arrays.toString(typeOptions) + ": ";
+        String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, false);
+        String type = ProductType.fromString(typeInput);
+
+        for (ProductCreator productCreator : productCreators) {
+            if (productCreator.canCreateFromKeyboard(type)) {
+                newProduct = productCreator.createFromKeyboard(keyboard, newId);
+            }
         }
 
-        productStorage.addProduct(newProduct);
-
-        System.out.println("Successfully requested new product with ID " + newProduct.getId());
+        if (newProduct == null) {
+            System.out.println("Failed to create a new product.");
+            return;
+        } else {
+            productStorage.addProduct(newProduct);
+            System.out.println("Successfully requested new product with ID " + newProduct.getId());
+        }
     }
 }

@@ -7,21 +7,14 @@ import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
 
-public class AddItemCommand implements Command {
-    private final String name = "add";
-    private final String description = "Add an item to inventory (e.g. when a shipment from the supplier arrives, or when returned).";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class AddItemCommand extends ProductStorageCommand {
+    public AddItemCommand(String name, String description, ProductStorage productStorage) {
+        super(name, description, productStorage);
     }
 
     public void execute(CommandManager commandManager) {
         Scanner keyboard = commandManager.getKeyboard();
-        ProductStorage productStorage = commandManager.getProductStorage();
+        ProductStorage productStorage = getProductStorage();
 
         String[] eligibleFromStatuses = { ProductStatus.REQUESTED, ProductStatus.RETURNED };
         String toStatus = ProductStatus.AVAILABLE;

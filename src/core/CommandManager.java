@@ -3,26 +3,19 @@ package core;
 import java.util.Scanner;
 
 import commands.Command;
-import storage.ProductStorage;
 
 public class CommandManager {
-    private final ProductStorage productStorage;
     private final Command[] commands;
     private final Scanner keyboard;
     private boolean listening = false;
 
-    public CommandManager(Command[] commands, ProductStorage productStorage, Scanner keyboard) {
+    public CommandManager(Command[] commands, Scanner keyboard) {
         this.commands = commands;
-        this.productStorage = productStorage;
         this.keyboard = keyboard;
     }
 
     public Command[] getCommands() {
         return this.commands;
-    }
-
-    public ProductStorage getProductStorage() {
-        return this.productStorage;
     }
 
     public Scanner getKeyboard() {

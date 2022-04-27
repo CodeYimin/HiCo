@@ -2,10 +2,22 @@ package commands;
 
 import core.CommandManager;
 
-public interface Command {
-    public String getName();
+public abstract class Command {
+    private final String name;
+    private final String description;
 
-    public String getDescription();
+    public Command(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-    public void execute(CommandManager commandManager);
+    public String getName() {
+        return name;
+    };
+
+    public String getDescription() {
+        return description;
+    };
+
+    public abstract void execute(CommandManager commandManager);
 }

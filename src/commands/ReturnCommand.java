@@ -7,21 +7,14 @@ import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
 
-public class ReturnCommand implements Command {
-    private final String name = "return";
-    private final String description = "Return a product to the store.";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class ReturnCommand extends ProductStorageCommand {
+    public ReturnCommand(String name, String description, ProductStorage productStorage) {
+        super(name, description, productStorage);
     }
 
     public void execute(CommandManager commandManager) {
         Scanner keyboard = commandManager.getKeyboard();
-        ProductStorage productStorage = commandManager.getProductStorage();
+        ProductStorage productStorage = getProductStorage();
 
         String[] eligibleFromStatuses = { ProductStatus.SOLD };
         String toStatus = ProductStatus.RETURNED;

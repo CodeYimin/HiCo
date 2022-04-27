@@ -2,7 +2,7 @@ package products;
 
 import java.util.Scanner;
 
-import storage.ProductStorageConverter;
+import storage.ProductCreator;
 import utils.InputUtils;
 
 public class Bodywear extends Product {
@@ -24,62 +24,63 @@ public class Bodywear extends Product {
         return size;
     }
 
-    public static Bodywear fromInput(Scanner keyboard, int id) {
-        String name = InputUtils.promptString(keyboard, "Enter name: ");
-        String status = ProductStatus.REQUESTED;
-        String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
-        double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
-        String size = InputUtils.promptString(keyboard, "Enter size: ");
-
-        return new Bodywear(id, name, status, description, price, weightKg, size);
-    }
-
     @Override
     public String toString() {
         return super.toString()
-                + " | Weight: " + weightKg
-                + " kg | Size: " + size;
+                + " | Weight: " + weightKg + "kg"
+                + " | Size: " + size;
     }
 
-    public static class StorageProcessor implements ProductStorageConverter {
+    @Override
+    public String[] toStorageData() {
+        String[] storageData = {
+                ProductType.ELECTRONIC,
+                String.valueOf(getId()),
+                getName(),
+                getStatus(),
+                getDescription(),
+                String.valueOf(getPrice()),
+                String.valueOf(getWeightKg()),
+                getSize()
+        };
+
+        return storageData;
+    }
+
+    public static class Creator implements ProductCreator {
         @Override
-        public boolean canConvertString(String storageString) {
-            return storageString.startsWith(ProductType.BODYWEAR);
+        public boolean canCreateFromStorageData(String[] storageData) {
+            return storageData[0].equals(ProductType.BODYWEAR);
         }
 
         @Override
-        public boolean canConvertProduct(Product product) {
-            return product instanceof Bodywear;
+        public boolean canCreateFromKeyboard(String createProductType) {
+            return createProductType.equals(ProductType.BODYWEAR);
         }
 
         @Override
-        public String convertProduct(Product product) {
-            Bodywear bodywear = (Bodywear) product;
-
-            return ProductType.BODYWEAR + ","
-                    + bodywear.getId() + ","
-                    + bodywear.getStatus() + ","
-                    + bodywear.getName() + ","
-                    + bodywear.getDescription() + ","
-                    + bodywear.getPrice() + ","
-                    + bodywear.getWeightKg() + ","
-                    + bodywear.getSize();
-        }
-
-        @Override
-        public Product convertString(String storageString) {
-            String[] parts = storageString.split(",");
-
-            int id = Integer.parseInt(parts[1]);
-            String status = parts[2];
-            String name = parts[3];
-            String description = parts[4];
-            double price = Double.parseDouble(parts[5]);
-            double weightKg = Double.parseDouble(parts[6]);
-            String size = parts[7];
+        public Product createFromStorageData(String[] storageData) {
+            int id = Integer.parseInt(storageData[1]);
+            String status = storageData[2];
+            String name = storageData[3];
+            String description = storageData[4];
+            double price = Double.parseDouble(storageData[5]);
+            double weightKg = Double.parseDouble(storageData[6]);
+            String size = storageData[7];
 
             return new Bodywear(id, status, name, description, price, weightKg, size);
+        }
+
+        @Override
+        public Product createFromKeyboard(Scanner keyboard, int newId) {
+            String name = InputUtils.promptString(keyboard, "Enter name: ");
+            String status = ProductStatus.REQUESTED;
+            String description = InputUtils.promptString(keyboard, "Enter description: ");
+            double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
+            double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
+            String size = InputUtils.promptString(keyboard, "Enter size: ");
+
+            return new Bodywear(newId, status, name, description, price, weightKg, size);
         }
     }
 }

@@ -5,21 +5,21 @@ import java.util.Scanner;
 import storage.ProductCreator;
 import utils.InputUtils;
 
-public class Car extends Product {
-    private double rangeKm;
+public class Electronic extends Product {
+    private double wattage;
 
-    public Car(int id, String name, String status, String description, double price, double rangeKm) {
+    public Electronic(int id, String name, String status, String description, double price, double wattage) {
         super(id, name, status, description, price);
-        this.rangeKm = rangeKm;
+        this.wattage = wattage;
     }
 
-    public double getRangeKm() {
-        return rangeKm;
+    public double getWattage() {
+        return wattage;
     }
 
     @Override
     public String toString() {
-        return super.toString() + " | Range: " + rangeKm + "km";
+        return super.toString() + " | Wattage: " + wattage + "W";
     }
 
     @Override
@@ -31,7 +31,7 @@ public class Car extends Product {
                 getStatus(),
                 getDescription(),
                 String.valueOf(getPrice()),
-                String.valueOf(getRangeKm())
+                String.valueOf(getWattage())
         };
 
         return storageData;
@@ -40,12 +40,12 @@ public class Car extends Product {
     public static class Creator implements ProductCreator {
         @Override
         public boolean canCreateFromStorageData(String[] storageData) {
-            return storageData[0].equals(ProductType.CAR);
+            return storageData[0].equals(ProductType.ELECTRONIC);
         }
 
         @Override
         public boolean canCreateFromKeyboard(String createProductType) {
-            return createProductType.equals(ProductType.CAR);
+            return createProductType.equals(ProductType.ELECTRONIC);
         }
 
         @Override
@@ -55,9 +55,9 @@ public class Car extends Product {
             String name = storageData[3];
             String description = storageData[4];
             double price = Double.parseDouble(storageData[5]);
-            double rangeKm = Double.parseDouble(storageData[6]);
+            double wattage = Double.parseDouble(storageData[6]);
 
-            return new Car(id, status, name, description, price, rangeKm);
+            return new Electronic(id, status, name, description, price, wattage);
         }
 
         @Override
@@ -66,9 +66,9 @@ public class Car extends Product {
             String status = ProductStatus.REQUESTED;
             String description = InputUtils.promptString(keyboard, "Enter description: ");
             double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
-            double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
+            double wattage = InputUtils.promptDouble(keyboard, "Enter wattage (W): ", 0);
 
-            return new Car(newId, status, name, description, price, rangeKm);
+            return new Electronic(newId, status, name, description, price, wattage);
         }
     }
 }

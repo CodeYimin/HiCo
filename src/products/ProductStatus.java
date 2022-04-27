@@ -7,6 +7,10 @@ public class ProductStatus {
     public static final String SOLD = "SOLD";
     public static final String RETURNED = "RETURNED";
 
+    public static String[] getAllStatuses() {
+        return new String[] { REQUESTED, AVAILABLE, ON_HOLD, SOLD, RETURNED };
+    }
+
     public static String fromString(String status) {
         for (String s : getAllStatuses()) {
             if (s.equalsIgnoreCase(status.trim())) {
@@ -14,9 +18,5 @@ public class ProductStatus {
             }
         }
         return null;
-    }
-
-    public static String[] getAllStatuses() {
-        return new String[] { REQUESTED, AVAILABLE, ON_HOLD, SOLD, RETURNED };
     }
 }

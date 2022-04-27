@@ -12,79 +12,65 @@ import storage.ProductStorage;
 import utils.ArrayUtils;
 import utils.InputUtils;
 
-public class ListCommand implements Command {
-    private final String name = "list";
-    private final String description = "Print a list of all products with optional filtering/sorting.";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class ListCommand extends ProductStorageCommand {
+    public ListCommand(String name, String description, ProductStorage productStorage) {
+        super(name, description, productStorage);
     }
 
     public void execute(CommandManager commandManager) {
-        ProductStorage productStorage = commandManager.getProductStorage();
         Scanner keyboard = commandManager.getKeyboard();
+        ProductStorage productStorage = getProductStorage();
 
-        System.out.print("Would you like to apply filters (y/N): ");
-        String useFilters = keyboard.nextLine();
+        // Enable filters?
+        String[] useFilterOptions = { "y", "n" };
+        String useFilter = InputUtils.promptString(keyboard, "Use filters? (y/N): ", useFilterOptions, true);
 
-        if (!useFilters.equalsIgnoreCase("y")) {
+        if (!useFilter.equalsIgnoreCase("y")) {
             System.out.println("All products: ");
             System.out.println(productStorage);
             return;
         }
 
+        // Input filters
+        final boolean ALLOW_BLANK_STATUS = true;
+        final boolean ALLOW_BLANK_TYPE = true;
+        final boolean ALLOW_BLANK_SORT_BY = true;
+
         String[] statusOptions = ProductStatus.getAllStatuses();
-        String status = InputUtils.promptString(keyboard, "(Enter to skip) Status filter " + Arrays.toString(statusOptions) + ": ",
-                statusOptions, true);
+        String statusPrompt = "(Enter to skip) Status filter " + Arrays.toString(statusOptions) + ": ";
+        String statusInput = InputUtils.promptString(keyboard, statusPrompt, statusOptions, ALLOW_BLANK_STATUS);
+        String status = ProductStatus.fromString(statusInput);
 
         String[] typeOptions = ProductType.getAllTypes();
-        String type = InputUtils.promptString(keyboard, "(Enter to skip) Type filter " + Arrays.toString(typeOptions) + ": ",
-                typeOptions, true);
+        String typePrompt = "(Enter to skip) Type filter " + Arrays.toString(typeOptions) + ": ";
+        String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, ALLOW_BLANK_TYPE);
+        String type = ProductType.fromString(typeInput);
 
-        String[] sortByOptions = { "id", "name", "price" };
-        String sortBy = InputUtils.promptString(keyboard, "(Enter to skip) Sort by " + Arrays.toString(sortByOptions) + ": ",
-                sortByOptions, true);
+        String[] sortOptions = { "id", "name", "price" };
+        String sortPrompt = "(Enter to skip) Sort by " + Arrays.toString(sortOptions) + ": ";
+        String sort = InputUtils.promptString(keyboard, sortPrompt, sortOptions, ALLOW_BLANK_SORT_BY);
 
-        ProductFilter statusFilter;
-        ProductFilter typeFilter;
-
-        // STATUS FILTER
-        if (status.trim().length() == 0) {
-            statusFilter = null;
-        } else {
-            statusFilter = new Product.StatusFilter(ProductStatus.fromString(status));
-        }
-
-        // TYPE FILTER
-        if (type.trim().length() == 0) {
-            typeFilter = null;
-        } else {
-            typeFilter = new Product.TypeFilter(ProductType.fromString(type));
-        }
-
+        // Apply filters
         ProductFilter[] filters = {};
-        if (statusFilter != null) {
+        if (status != null) {
+            ProductFilter statusFilter = new Product.StatusFilter(status);
             filters = ArrayUtils.withElementAdded(filters, statusFilter);
         }
-        if (typeFilter != null) {
+        if (type != null) {
+            ProductFilter typeFilter = new Product.TypeFilter(type);
             filters = ArrayUtils.withElementAdded(filters, typeFilter);
         }
-
         Product[] filteredProducts = productStorage.getProducts(filters);
 
-        // SORT BY
-        if (sortBy.equalsIgnoreCase("price")) {
+        // Apply sort
+        if (sort.equalsIgnoreCase("price")) {
             Arrays.sort(filteredProducts, new Product.PriceComparator());
-        } else if (sortBy.equalsIgnoreCase("name")) {
+        } else if (sort.equalsIgnoreCase("name")) {
             Arrays.sort(filteredProducts, new Product.NameComparator());
-        } else if (sortBy.equalsIgnoreCase("id")) {
+        } else if (sort.equalsIgnoreCase("id")) {
             Arrays.sort(filteredProducts, new Product.IdComparator());
         } else {
-            // Do nothing, don't sort
+            // Do nothing (don't sort)
         }
 
         if (filteredProducts.length == 0) {

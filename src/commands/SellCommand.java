@@ -7,21 +7,14 @@ import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
 
-public class SellCommand implements Command {
-    private final String name = "sell";
-    private final String description = "Remove an item from the inventory. (Mark as sold)";
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
+public class SellCommand extends ProductStorageCommand {
+    public SellCommand(String name, String description, ProductStorage productStorage) {
+        super(name, description, productStorage);
     }
 
     public void execute(CommandManager commandManager) {
         Scanner keyboard = commandManager.getKeyboard();
-        ProductStorage productStorage = commandManager.getProductStorage();
+        ProductStorage productStorage = getProductStorage();
 
         String[] eligibleFromStatuses = { ProductStatus.AVAILABLE, ProductStatus.ON_HOLD };
         String toStatus = ProductStatus.SOLD;
