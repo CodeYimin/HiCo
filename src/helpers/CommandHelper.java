@@ -12,7 +12,13 @@ public class CommandHelper {
             String[] eligibleFromStatuses, String toStatus, String successMessage, String failMessage) {
         int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
 
-        Product product = productStorage.getProduct(id);
+        Product product;
+        try {
+            product = productStorage.getProduct(id);
+        } catch (Exception e) {
+            System.out.println("Failed to get product.");
+            return null;
+        }
         if (product == null) {
             System.out.println("Product ID " + id + " does not exist.");
             return null;
@@ -25,13 +31,13 @@ public class CommandHelper {
         }
 
         product.setStatus(toStatus);
-        boolean successfullySyncedToStorage = productStorage.syncProduct(product);
-        if (!successfullySyncedToStorage) {
+        try {
+            productStorage.syncProduct(product);
+            System.out.println(successMessage);
+            return product;
+        } catch (Exception e) {
             System.out.println(failMessage);
             return null;
         }
-
-        System.out.println(successMessage);
-        return product;
     }
 }

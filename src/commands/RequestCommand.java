@@ -23,13 +23,21 @@ public class RequestCommand extends ProductStorageCommand {
         ProductStorage productStorage = getProductStorage();
 
         Product newProduct = null;
-        int newId = productStorage.getMaxProductId() + 1;
+        int newId;
+        try {
+            newId = productStorage.getMaxProductId() + 1;
+        } catch (Exception e) {
+            System.out.println("Failed to request a new product id.");
+            return;
+        }
 
+        // Get the type of product to create
         String[] typeOptions = ProductType.getAllTypes();
         String typePrompt = "Enter a product type " + Arrays.toString(typeOptions) + ": ";
         String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, false);
         String type = ProductType.fromString(typeInput);
 
+        // Try to create a product with the given type using the product creators
         for (ProductCreator productCreator : productCreators) {
             if (productCreator.canCreateFromKeyboard(type)) {
                 newProduct = productCreator.createFromKeyboard(keyboard, newId);
@@ -37,16 +45,15 @@ public class RequestCommand extends ProductStorageCommand {
         }
 
         if (newProduct == null) {
-            System.out.println("Failed to create a new product.");
+            System.out.println("Failed to request new product.");
             return;
         }
 
-        boolean successfullyAddedProduct = productStorage.addProduct(newProduct);
-        if (!successfullyAddedProduct) {
-            System.out.println("Failed to add product to storage.");
-            return;
+        try {
+            productStorage.addProduct(newProduct);
+            System.out.println("Successfully requested new product with ID " + newProduct.getId());
+        } catch (Exception e) {
+            System.out.println("Failed to request new product.");
         }
-
-        System.out.println("Successfully requested new product with ID " + newProduct.getId());
     }
 }

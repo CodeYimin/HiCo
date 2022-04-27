@@ -34,7 +34,7 @@ public class Bodywear extends Product {
     @Override
     public String[] toStorageData() {
         String[] storageData = {
-                ProductType.ELECTRONIC,
+                ProductType.BODYWEAR,
                 String.valueOf(getId()),
                 getStatus(),
                 getName(),

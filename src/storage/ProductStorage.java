@@ -14,7 +14,7 @@ public class ProductStorage {
         this.productCreators = productCreators;
     }
 
-    public int getMaxProductId() {
+    public int getMaxProductId() throws Exception {
         int maxProductId = 0;
         for (Product product : getProducts()) {
             if (product.getId() > maxProductId) {
@@ -25,7 +25,7 @@ public class ProductStorage {
     }
 
     private static String encodeData(String[] data) {
-        String[] encodedData = ArrayUtils.replaceAll(data, ",", "\\,");
+        String[] encodedData = ArrayUtils.replaceAll(data, ",", "\\\\,");
         String encodedString = ArrayUtils.join(encodedData, ",");
         return encodedString;
     }
@@ -50,41 +50,35 @@ public class ProductStorage {
         return null;
     }
 
-    public boolean addProduct(Product product) {
+    public void addProduct(Product product) throws Exception {
         String storageString = encodeProduct(product);
-        try {
-            fileManager.addLine(storageString);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        fileManager.addLine(storageString);
     }
 
-    public Product removeProduct(int id) {
-        Product productToRemove = getProduct(id);
-        if (productToRemove == null) {
+    public Product removeProduct(Product product) throws Exception {
+        Product[] products = getProducts();
+        Product removedProduct = null;
+        for (Product p : products) {
+            if (removedProduct == null && p.equals(product)) {
+                removedProduct = p;
+                products = ArrayUtils.withoutElement(products, p);
+            }
+        }
+        if (removedProduct == null) {
             return null;
         }
 
-        boolean successfullyRemovedFromFile = fileManager.removeLine(encodeProduct(productToRemove));
-        if (successfullyRemovedFromFile) {
-            return productToRemove;
-        } else {
-            return null;
+        String[] encodedProducts = new String[products.length];
+        for (int i = 0; i < encodedProducts.length; i++) {
+            encodedProducts[i] = encodeProduct(products[i]);
         }
+        fileManager.writeLines(encodedProducts);
+
+        return removedProduct;
     }
 
-    public Product removeProduct(Product product) {
-        return removeProduct(product.getId());
-    }
-
-    public Product[] getProducts() {
-        String[] productStrings;
-        try {
-            productStrings = fileManager.readLines();
-        } catch (Exception error) {
-            return new Product[0];
-        }
+    public Product[] getProducts() throws Exception {
+        String[] productStrings = fileManager.readLines();
 
         Product[] products = new Product[productStrings.length];
 
@@ -95,7 +89,7 @@ public class ProductStorage {
         return products;
     }
 
-    public Product[] getProducts(ProductFilter[] filters) {
+    public Product[] getProducts(ProductFilter[] filters) throws Exception {
         Product[] products = getProducts();
         Product[] filteredProducts = {};
 
@@ -114,11 +108,11 @@ public class ProductStorage {
         return filteredProducts;
     }
 
-    public Product[] getProducts(ProductFilter filter) {
+    public Product[] getProducts(ProductFilter filter) throws Exception {
         return getProducts(new ProductFilter[] { filter });
     }
 
-    public Product getProduct(ProductFilter[] filters) {
+    public Product getProduct(ProductFilter[] filters) throws Exception {
         Product[] filteredProducts = getProducts(filters);
         if (filteredProducts.length == 0) {
             return null;
@@ -127,42 +121,29 @@ public class ProductStorage {
         }
     }
 
-    public Product getProduct(ProductFilter filter) {
+    public Product getProduct(ProductFilter filter) throws Exception {
         return getProduct(new ProductFilter[] { filter });
     }
 
-    public Product getProduct(int id) {
+    public Product getProduct(int id) throws Exception {
         return getProduct(new Product.IdFilter(id));
     }
 
-    public Product getProduct(Product product) {
+    public Product getProduct(Product product) throws Exception {
         return getProduct(product.getId());
     }
 
-    public boolean hasProduct(Product product) {
+    public boolean hasProduct(Product product) throws Exception {
         return getProduct(product) != null;
     }
 
-    public boolean syncProduct(Product product) {
+    public void syncProduct(Product product) throws Exception {
         if (removeProduct(product) != null) {
-            return addProduct(product);
-        } else {
-            return false;
+            addProduct(product);
         }
     }
 
-    public int size() {
+    public int numOfProducts() throws Exception {
         return getProducts().length;
-    }
-
-    @Override
-    public String toString() {
-        String output = "";
-        for (Product product : getProducts()) {
-            output += "- " + product + "\n";
-        }
-        // Remove last new line character
-        output = output.substring(0, output.length() - 1);
-        return output;
     }
 }

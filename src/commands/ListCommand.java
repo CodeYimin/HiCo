@@ -27,11 +27,17 @@ public class ListCommand extends ProductStorageCommand {
 
         if (!useFilter.equalsIgnoreCase("y")) {
             System.out.println("All products: ");
-            System.out.println(productStorage);
+            Product[] products;
+            try {
+                products = productStorage.getProducts();
+                System.out.println(ArrayUtils.toStringList(products));
+            } catch (Exception e) {
+                System.out.println("Failed to retrieve products.");
+            }
             return;
         }
 
-        // Input filters
+        // Ask for user input filters
         final boolean ALLOW_BLANK_STATUS = true;
         final boolean ALLOW_BLANK_TYPE = true;
         final boolean ALLOW_BLANK_SORT_BY = true;
@@ -50,7 +56,7 @@ public class ListCommand extends ProductStorageCommand {
         String sortPrompt = "(Enter to skip) Sort by " + Arrays.toString(sortOptions) + ": ";
         String sort = InputUtils.promptString(keyboard, sortPrompt, sortOptions, ALLOW_BLANK_SORT_BY);
 
-        // Apply filters
+        // Set filters
         ProductFilter[] filters = {};
         if (status != null) {
             ProductFilter statusFilter = new Product.StatusFilter(status);
@@ -60,9 +66,17 @@ public class ListCommand extends ProductStorageCommand {
             ProductFilter typeFilter = new Product.TypeFilter(type);
             filters = ArrayUtils.withElement(filters, typeFilter);
         }
-        Product[] filteredProducts = productStorage.getProducts(filters);
 
-        // Apply sort
+        // Get filtered products
+        Product[] filteredProducts;
+        try {
+            filteredProducts = productStorage.getProducts(filters);
+        } catch (Exception error) {
+            System.out.println("Failed to get products.");
+            return;
+        }
+
+        // Apply sort to filtered products
         if (sort.equalsIgnoreCase("price")) {
             Arrays.sort(filteredProducts, new Product.PriceComparator());
         } else if (sort.equalsIgnoreCase("name")) {
@@ -73,14 +87,14 @@ public class ListCommand extends ProductStorageCommand {
             // Do nothing (don't sort)
         }
 
+        // No filtered products found
         if (filteredProducts.length == 0) {
             System.out.println("No products found.");
             return;
         }
 
+        // Print filtered products
         System.out.println("Filtered products: ");
-        for (Product product : filteredProducts) {
-            System.out.println("- " + product);
-        }
+        System.out.println(ArrayUtils.toStringList(filteredProducts));
     }
 }

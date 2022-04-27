@@ -25,7 +25,7 @@ public class Car extends Product {
     @Override
     public String[] toStorageData() {
         String[] storageData = {
-                ProductType.ELECTRONIC,
+                ProductType.CAR,
                 String.valueOf(getId()),
                 getStatus(),
                 getName(),

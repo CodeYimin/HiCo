@@ -18,8 +18,8 @@ public class AddItemCommand extends ProductStorageCommand {
 
         String[] eligibleFromStatuses = { ProductStatus.REQUESTED, ProductStatus.RETURNED };
         String toStatus = ProductStatus.AVAILABLE;
-        String successMessage = "Successfully made product available.";
-        String failMessage = "Failed to make product available.";
+        String successMessage = "Successfully added item to inventory.";
+        String failMessage = "Failed to add item to inventory.";
         CommandHelper.promptProductStatusChange(keyboard, productStorage, eligibleFromStatuses, toStatus, successMessage, failMessage);
     }
 }

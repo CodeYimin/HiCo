@@ -56,4 +56,14 @@ public class ArrayUtils {
         }
         return string;
     }
+
+    public static String toStringList(Object[] array) {
+        String string = "";
+        for (Object element : array) {
+            string += "- " + element + "\n";
+        }
+        // Remove last newline
+        string = string.substring(0, string.length() - 1);
+        return string;
+    }
 }

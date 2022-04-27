@@ -5,6 +5,5 @@ Bodywear,1,SOLD,Ironman suit,Original iron's man suit capable of many features.,
 Car,5,RETURNED,Tai Lopez's Car,Back in my garage with my lamborghini.,750000,10000
 Electronic,7,REQUESTED,Play Station 15,Newest gen console!!! HOT!!!,5599.99,2500.0
 Car,4,AVAILABLE,High Jumping Car,A car made by intelligent bunnies. Capable of jumping 100 metres.,5000000.0,50000.0
-Electronic,8,AVAILABLE,Grigorov Coin Miner,Invest early...,50000.0,56000.0
 Bodywear,9,REQUESTED,Elytra,Glide around with a pair of wings!,98888,10,Small
-Electronic,9,Elytra,AVAILABLE,Glide around with a pair of wings!,98888.0,10.0,Small
+Electronic,8,AVAILABLE,Grigorov Coin Miner,Invest early...,50000.0,56000.0

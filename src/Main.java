@@ -6,8 +6,8 @@ import commands.AddItemCommand;
 import commands.Command;
 import commands.ExitCommand;
 import commands.HelpCommand;
+import commands.HoldCommand;
 import commands.ListCommand;
-import commands.PutOnHoldCommand;
 import commands.RequestCommand;
 import commands.ReturnCommand;
 import commands.SellCommand;
@@ -20,10 +20,11 @@ import storage.ProductCreator;
 import storage.ProductStorage;
 
 public class Main {
-    private static final String PRODUCT_STORAGE_FILE_PATH = "../data/products.txt";
+    private static final String PRODUCT_STORAGE_FILE_PATH = "C:/Users/Yimin/Documents/Programming/Java/Grade 11/Assignments/HiCo/data/test.txt";
 
     public static void main(String[] args) {
-        FileManager productStorageFileManager = new FileManager(new File(PRODUCT_STORAGE_FILE_PATH));
+        File productStorageFile = new File(PRODUCT_STORAGE_FILE_PATH);
+        FileManager productStorageFileManager = new FileManager(productStorageFile);
         ProductCreator[] productCreators = {
                 new Bodywear.Creator(),
                 new Car.Creator(),
@@ -41,7 +42,7 @@ public class Main {
                         productStorage,
                         productCreators),
                 new AddItemCommand("add", "Add a new product to the store.", productStorage),
-                new PutOnHoldCommand("hold", "Put a product on hold (e.g. for online orders).", productStorage),
+                new HoldCommand("hold", "Put a product on hold (e.g. for online orders).", productStorage),
                 new SellCommand("sell", "Mark a product as sold.", productStorage),
                 new ReturnCommand("return", "Return a product to the store.", productStorage)
         };

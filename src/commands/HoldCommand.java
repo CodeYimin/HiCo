@@ -7,8 +7,8 @@ import helpers.CommandHelper;
 import products.ProductStatus;
 import storage.ProductStorage;
 
-public class PutOnHoldCommand extends ProductStorageCommand {
-    public PutOnHoldCommand(String name, String description, ProductStorage productStorage) {
+public class HoldCommand extends ProductStorageCommand {
+    public HoldCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
     }
 
