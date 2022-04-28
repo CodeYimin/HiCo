@@ -20,7 +20,7 @@ public class Electronic extends Product {
     }
 
     @Override
-    public String[] extraStorageData() {
+    public String[] extraStorageFields() {
         return new String[] { String.valueOf(getWattage()) };
     }
 }

@@ -59,9 +59,9 @@ public abstract class Product {
         this.status = status;
     }
 
-    public abstract String[] extraStorageData();
+    public abstract String[] extraStorageFields();
 
-    public final String toStorageData() {
+    public final String toStorageString() {
         String[] storageFields = {
                 String.valueOf(getId()),
                 getType(),
@@ -70,7 +70,7 @@ public abstract class Product {
                 getDescription(),
                 String.valueOf(getPrice())
         };
-        String[] fullStorageFields = ArrayUtils.concat(storageFields, extraStorageData());
+        String[] fullStorageFields = ArrayUtils.concat(storageFields, extraStorageFields());
 
         String[] encodedFields = ArrayUtils.replaceAll(fullStorageFields, ",", "\\\\,");
         String encodedString = ArrayUtils.join(encodedFields, ",");

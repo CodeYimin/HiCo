@@ -29,7 +29,7 @@ public class Bodywear extends Product {
     }
 
     @Override
-    public String[] extraStorageData() {
+    public String[] extraStorageFields() {
         return new String[] {
                 String.valueOf(getWeightKg()),
                 getSize()

@@ -31,7 +31,7 @@ public class ProductStorage {
         return decodedData;
     }
 
-    private Product decodeProduct(String storageString) {
+    private Product storageStringToProduct(String storageString) {
         String[] storageFields = decodeFields(storageString);
         for (ProductCreator productCreator : productCreators) {
             if (productCreator.canCreateFromStorageData(storageFields)) {
@@ -42,7 +42,7 @@ public class ProductStorage {
     }
 
     public void addProduct(Product product) throws Exception {
-        fileManager.addLine(product.toStorageData());
+        fileManager.addLine(product.toStorageString());
     }
 
     public Product removeProduct(Product product) throws Exception {
@@ -60,7 +60,7 @@ public class ProductStorage {
 
         String[] encodedProducts = new String[products.length];
         for (int i = 0; i < encodedProducts.length; i++) {
-            encodedProducts[i] = products[i].toStorageData();
+            encodedProducts[i] = products[i].toStorageString();
         }
         fileManager.writeLines(encodedProducts);
 
@@ -73,7 +73,7 @@ public class ProductStorage {
         Product[] products = new Product[productStrings.length];
 
         for (int i = 0; i < productStrings.length; i++) {
-            products[i] = decodeProduct(productStrings[i]);
+            products[i] = storageStringToProduct(productStrings[i]);
         }
 
         return products;
