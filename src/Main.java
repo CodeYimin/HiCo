@@ -17,21 +17,26 @@ import core.ProductStorage;
 
 public class Main {
 	private static final String PRODUCT_STORAGE_FILE_PATH = "C:/Users/Yimin/Documents/Programming/Java/Grade 11/Assignments/HiCo/data/test.txt";
+	private static final String WELCOME_MESSAGE = "Welcome to HiCo Inventory Management System! Type \"help\" for a list of commands.";
 
 	public static void main(String[] args) {
+		// Initialize product storage
 		File productStorageFile = new File(PRODUCT_STORAGE_FILE_PATH);
 		FileManager productStorageFileManager = new FileManager(productStorageFile);
 		ProductStorage productStorage = new ProductStorage(productStorageFileManager);
 
+		// Initialize commands and command manager
 		Command[] commands = {
 				new ExitCommand("exit", "Exit the program."),
 				new HelpCommand("help", "Display a list of available commands."),
 				new ListCommand("list", "List all products with optional filtering/sorting.", productStorage),
 				new RequestCommand(
 						"request",
-						"Request a new product to be added to the store",
+						"Request from the supplier a new product to be added to the store",
 						productStorage),
-				new AddItemCommand("add", "Add an item to inventory (e.g. when a shipment from the supplier arrives, or when returned).",
+				new AddItemCommand(
+						"add",
+						"Add an item to inventory (e.g. when a request from the supplier arrives, or when returned).",
 						productStorage),
 				new HoldCommand("hold", "Put a product on hold (e.g. for online orders).", productStorage),
 				new SellCommand("sell", "Mark a product as sold.", productStorage),
@@ -40,7 +45,8 @@ public class Main {
 		Scanner keyboard = new Scanner(System.in);
 		CommandManager commandManager = new CommandManager(commands, keyboard);
 
-		System.out.println("Welcome to HiCo Inventory Management System! Type \"help\" for a list of commands.");
+		// Start the program
+		System.out.println(WELCOME_MESSAGE);
 		commandManager.startListening();
 	}
 }

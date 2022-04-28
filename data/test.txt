@@ -1,1 +1,2 @@
 1,CarAndElectronicPackage,PRo deal,REQUaESTED,Very good deal,500.0,1\,Car\,Honda\,N/A\,Honda\,555.0\,555.0,1\,Electronic\,Ipad\,N/A\,ipda\,555.0\,555.0
+2,CarAndElectronicPackage,Hypebeast package,REQUESTED,Latest gear at a discounted price,500000.0,2\,Car\,Supreme x Louis Vuitton Ferrari F12\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 12 in the world.\,400000.0\,3000.0,2\,Electronic\,Supreme x Louis Vuitton PS5\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 5 in the world.\,124999.99\,1500.0
