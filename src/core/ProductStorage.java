@@ -39,11 +39,11 @@ public class ProductStorage {
             return null;
         }
 
-        String[] encodedProducts = new String[products.length];
-        for (int i = 0; i < encodedProducts.length; i++) {
-            encodedProducts[i] = products[i].toStorageString();
+        String[] productStorageStrings = new String[products.length];
+        for (int i = 0; i < productStorageStrings.length; i++) {
+            productStorageStrings[i] = products[i].toStorageString();
         }
-        fileManager.writeLines(encodedProducts);
+        fileManager.writeLines(productStorageStrings);
 
         return removedProduct;
     }
