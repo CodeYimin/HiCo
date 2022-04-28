@@ -1,0 +1,5 @@
+1,Car,,PACKAGED,,5.0,5.0
+2,Car,,PACKAGED,,5.0,5.0
+3,Car,,PACKAGED,,5.0,5.0
+4,Electronic,,PACKAGED,,5.0,
+5,CarElectronicPackage,AVAILABLE,1,2,3,4

@@ -33,11 +33,11 @@ public class ElectronicCreator implements ProductCreator {
 
     @Override
     public Product createFromKeyboard(Scanner keyboard, int newId) {
-        String name = InputUtils.promptString(keyboard, "Enter name: ");
+        String name = InputUtils.promptString(keyboard, "Enter electronic name: ");
         String status = ProductStatus.REQUESTED;
-        String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
-        double wattage = InputUtils.promptDouble(keyboard, "Enter wattage (W): ", 0);
+        String description = InputUtils.promptString(keyboard, "Enter electronic description: ");
+        double price = InputUtils.promptDouble(keyboard, "Enter electronic price: $", 0);
+        double wattage = InputUtils.promptDouble(keyboard, "Enter electronic wattage (W): ", 0);
 
         return new Electronic(newId, name, status, description, price, wattage);
     }

@@ -34,12 +34,12 @@ public class BodywearCreator implements ProductCreator {
 
     @Override
     public Product createFromKeyboard(Scanner keyboard, int newId) {
-        String name = InputUtils.promptString(keyboard, "Enter name: ");
+        String name = InputUtils.promptString(keyboard, "Enter bodywear name: ");
         String status = ProductStatus.REQUESTED;
-        String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
-        double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
-        String size = InputUtils.promptString(keyboard, "Enter size: ");
+        String description = InputUtils.promptString(keyboard, "Enter bodywear description: ");
+        double price = InputUtils.promptDouble(keyboard, "Enter bodywear price: $", 0);
+        double weightKg = InputUtils.promptDouble(keyboard, "Enter bodywear weight (kg): ", 0);
+        String size = InputUtils.promptString(keyboard, "Enter bodywear size: ");
 
         return new Bodywear(newId, name, status, description, price, weightKg, size);
     }

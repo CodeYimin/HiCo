@@ -43,6 +43,7 @@ public class RequestCommand extends ProductCommand {
             System.out.println("Successfully requested new product with ID " + newProduct.getId());
         } catch (Exception e) {
             System.out.println("Failed to request new product.");
+            e.printStackTrace();
         }
     }
 }

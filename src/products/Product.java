@@ -3,6 +3,7 @@ package products;
 import java.util.Scanner;
 
 import products.creators.BodywearCreator;
+import products.creators.CarAndElectronicPackageCreator;
 import products.creators.CarCreator;
 import products.creators.ElectronicCreator;
 import products.creators.ProductCreator;
@@ -12,7 +13,8 @@ public abstract class Product {
     private static final ProductCreator[] PRODUCT_CREATORS = {
             new BodywearCreator(),
             new CarCreator(),
-            new ElectronicCreator()
+            new ElectronicCreator(),
+            new CarAndElectronicPackageCreator(new CarCreator(), new ElectronicCreator())
     };
 
     private final int id;

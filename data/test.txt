@@ -1,1 +1,5 @@
 1,Car,,ON_HOLD,,5.0,5.0
+2,CarAndElectronicPackage,5,REQUESTED,5,5.0,2\,Car\,5\,REQUESTED\,555\,5.0\,5.0,2\,Electronic\,5\,REQUESTED\,5\,5.0\,5.0
+4,CarAndElectronicPackage,5,REQUESTED,5,5.0,4\,Car\,5\,REQUESTED\,5\,5.0\,5.0,4\,Electronic\,5\,REQUESTED\,5\,5.0\,5.0
+3,CarAndElectronicPackage,Package,AVAILABLE,5,5.0,3\,Car\,5\,REQUESTED\,5\,5.0\,5.0,3\,Electronic\,5\,REQUESTED\,5\,5.0\,5.0
+5,CarAndElectronicPackage,5,AVAILABLE,5,5.0,5\,Car\,5\,N/A\,5\,5.0\,5.0,5\,Electronic\,5\,N/A\,5\,5.0\,5.0

@@ -33,11 +33,11 @@ public class CarCreator implements ProductCreator {
 
     @Override
     public Product createFromKeyboard(Scanner keyboard, int newId) {
-        String name = InputUtils.promptString(keyboard, "Enter name: ");
+        String name = InputUtils.promptString(keyboard, "Enter car name: ");
         String status = ProductStatus.REQUESTED;
-        String description = InputUtils.promptString(keyboard, "Enter description: ");
-        double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
-        double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
+        String description = InputUtils.promptString(keyboard, "Enter car description: ");
+        double price = InputUtils.promptDouble(keyboard, "Enter car price: $", 0);
+        double rangeKm = InputUtils.promptDouble(keyboard, "Enter car range (km): ", 0);
 
         return new Car(newId, name, status, description, price, rangeKm);
     }
