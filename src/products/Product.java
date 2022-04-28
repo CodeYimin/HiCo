@@ -8,6 +8,7 @@ import products.creators.CarCreator;
 import products.creators.ElectronicCreator;
 import products.creators.ProductCreator;
 import utils.ArrayUtils;
+import utils.StringUtils;
 
 public abstract class Product {
     // Product creators are used to create products from keyboard input
@@ -104,34 +105,6 @@ public abstract class Product {
     }
 
     /**
-     * Extra data child classes can override to store extra data
-     */
-    public abstract String[] extraStorageFields();
-
-    /**
-     * Returns a string representation of the product
-     * ready to be stored in a file
-     * 
-     * @return Storage ready string representation of the product
-     */
-    public final String toStorageString() {
-        // Base fields of the Product class which all child classes have
-        String[] storageFields = {
-                String.valueOf(getId()),
-                getType(),
-                getName(),
-                getStatus(),
-                getDescription(),
-                String.valueOf(getPrice())
-        };
-        // Combine base fields with any extra fields child classes may have
-        String[] fullStorageFields = ArrayUtils.concat(storageFields, extraStorageFields());
-
-        // Encode the fields to be stored in a file safely
-        return encodeFields(fullStorageFields);
-    }
-
-    /**
      * Instantiates a product object from a
      * storage string representation of the product
      * 
@@ -164,6 +137,90 @@ public abstract class Product {
         return null;
     }
 
+    /**
+     * Extra data child classes can override to store extra data
+     */
+    public abstract String[] extraStorageFields();
+
+    /**
+     * Returns a string representation of the product
+     * ready to be stored in a file
+     * 
+     * @return Storage ready string representation of the product
+     */
+    public final String toStorageString() {
+        // Base fields of the Product class which all child classes have
+        String[] sharedStorageFields = {
+                String.valueOf(getId()),
+                getType(),
+                getName(),
+                getStatus(),
+                getDescription(),
+                String.valueOf(getPrice())
+        };
+        // Combine base fields with any extra fields child classes may have
+        String[] storageFields = ArrayUtils.concat(sharedStorageFields, extraStorageFields());
+
+        // Encode the fields to be stored in a file safely
+        return encodeFields(storageFields);
+    }
+
+    public abstract String extraToStringBody();
+
+    @Override
+    public final String toString() {
+        /*
+         * Borders and padding are generated automatically at the end and are not
+         * included in calculations.
+         * Example Output:
+         * @formatter:off
+         * +----------------------------------+
+         * | ID: 2 | Car | SOLD | $500000     |
+         * +----------------------------------+
+         * | Name: Toyota Corolla             |
+         * | Description: A car A car A car A |
+         * +----------------------------------+
+         * @formatter:on
+         */
+        String header = "ID: " + getId()
+                + " | " + getType()
+                + " | " + getStatus()
+                + " | $" + getPrice();
+
+        String sharedBody = "Name: " + getName() + "\n" + "Description: " + getDescription();
+        String body = sharedBody + "\n" + extraToStringBody();
+
+        int headerWidth = header.length();
+        int bodyWidth = ArrayUtils.maxElementLength(body.split("\n"));
+
+        int contentWidth = Math.max(headerWidth, bodyWidth);
+        int totalWidth = contentWidth + 4; // content + 2 vertical borders + 2 padding
+
+        String horizontalBorder = "+" + StringUtils.repeat("-", totalWidth - 2) + "+";
+
+        // Begin creating string output
+        String result = "";
+
+        // Top border
+        result += horizontalBorder + "\n";
+
+        // Header
+        result += "| " + StringUtils.padRight(header, contentWidth) + " |\n";
+
+        // Header and body separator border
+        result += horizontalBorder + "\n";
+
+        // Body
+        for (String bodyLine : body.split("\n")) {
+            result += "| " + StringUtils.padRight(bodyLine, contentWidth) + " |\n";
+        }
+
+        // Bottom border
+        result += horizontalBorder;
+
+        return result;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -173,15 +230,5 @@ public abstract class Product {
         }
         Product product = (Product) o;
         return id == product.id;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id
-                + " | Type: " + type
-                + " | Name: " + name
-                + " | Status: " + status
-                + " | Description: " + description
-                + " | Price: $" + price;
     }
 }

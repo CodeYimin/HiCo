@@ -46,7 +46,7 @@ public class ArrayUtils {
         return newArray;
     }
 
-    public static String join(String[] array, String separator) {
+    public static String join(Object[] array, String separator) {
         String string = "";
         for (int i = 0; i < array.length; i++) {
             string += array[i];
@@ -69,5 +69,39 @@ public class ArrayUtils {
         // Remove last newline
         string = string.substring(0, string.length() - 1);
         return string;
+    }
+
+    /**
+     * Determines the element with the highest string length in an array
+     * and returns the length
+     * 
+     * @param array
+     *            the array to search through
+     * @return the length of the element with longest string
+     */
+    public static int maxElementLength(Object[] array) {
+        int maxElementLength = 0;
+        for (Object object : array) {
+            int objectStringLength = object.toString().length();
+            if (objectStringLength > maxElementLength) {
+                maxElementLength = objectStringLength;
+            }
+        }
+        return maxElementLength;
+    }
+
+    /**
+     * Determines the sum of the lengths of all elements in an array
+     * 
+     * @param array
+     *            the array to search through
+     * @return the sum of the lengths of all elements
+     */
+    public static int sumElementLength(Object[] array) {
+        int sumElementLength = 0;
+        for (Object object : array) {
+            sumElementLength += object.toString().length();
+        }
+        return sumElementLength;
     }
 }

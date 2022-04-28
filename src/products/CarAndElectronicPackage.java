@@ -29,10 +29,8 @@ public class CarAndElectronicPackage extends Product {
     }
 
     @Override
-    public String toString() {
-        return super.toString()
-                + "\n\t- Car: " + car.toString()
-                + "\n\t- Electronic: " + electronic.toString();
+    public String extraToStringBody() {
+        return "\n" + car.toString() + "\n\n" + electronic.toString() + "\n";
     }
 
     @Override

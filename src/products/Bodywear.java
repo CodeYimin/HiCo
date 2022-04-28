@@ -22,10 +22,8 @@ public class Bodywear extends Product {
     }
 
     @Override
-    public String toString() {
-        return super.toString()
-                + " | Weight: " + weightKg + "kg"
-                + " | Size: " + size;
+    public String extraToStringBody() {
+        return "Weight: " + weightKg + "kg\n" + "Size: " + size;
     }
 
     @Override

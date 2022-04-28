@@ -15,8 +15,8 @@ public class Car extends Product {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " | Range: " + rangeKm + "km";
+    public String extraToStringBody() {
+        return "Range: " + rangeKm + "km";
     }
 
     @Override

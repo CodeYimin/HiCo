@@ -15,8 +15,8 @@ public class Electronic extends Product {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " | Wattage: " + wattage + "W";
+    public String extraToStringBody() {
+        return "Wattage: " + wattage + "W";
     }
 
     @Override

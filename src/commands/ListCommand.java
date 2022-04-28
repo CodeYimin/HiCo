@@ -48,7 +48,7 @@ public class ListCommand extends ProductCommand {
                 System.out.println("No products.");
             } else {
                 System.out.println("All products:");
-                System.out.println(ArrayUtils.toStringList(products));
+                System.out.println(ArrayUtils.join(products, "\n\n"));
             }
             return;
         }
@@ -109,6 +109,6 @@ public class ListCommand extends ProductCommand {
 
         // Print filtered products
         System.out.println("Filtered products: ");
-        System.out.println(ArrayUtils.toStringList(filteredProducts));
+        System.out.println(ArrayUtils.join(filteredProducts, "\n\n"));
     }
 }
