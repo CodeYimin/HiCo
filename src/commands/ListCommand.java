@@ -39,7 +39,7 @@ public class ListCommand extends ProductCommand {
                 System.out.println("Failed to retrieve products.");
             }
 
-            if (products.length == 0) {
+            if (products == null || products.length == 0) {
                 System.out.println("No products.");
             } else {
                 System.out.println("All products:");
