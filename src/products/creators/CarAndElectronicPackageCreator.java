@@ -10,52 +10,41 @@ import products.constants.ProductStatus;
 import products.constants.ProductType;
 import utils.InputUtils;
 
-public class CarAndElectronicPackageCreator implements ProductCreator {
-    private CarCreator carCreator;
-    private ElectronicCreator electronicCreator;
+public class CarAndElectronicPackageCreator extends ProductCreator<CarAndElectronicPackage> {
+    private final CarCreator carCreator = new CarCreator();
+    private final ElectronicCreator electronicCreator = new ElectronicCreator();
 
-    public CarAndElectronicPackageCreator(CarCreator carCreator, ElectronicCreator electronicCreator) {
-        this.carCreator = carCreator;
-        this.electronicCreator = electronicCreator;
+    public CarAndElectronicPackageCreator() {
+        super(ProductType.CAR_AND_ELECTRONIC_PACKAGE);
     }
 
     @Override
-    public boolean canCreateFromStorageData(String[] storageData) {
-        return storageData[1].equals(ProductType.CAR_AND_ELECTRONIC_PACKAGE);
-    }
+    public CarAndElectronicPackage createFromStorageFields(String[] storageFields) {
+        int id = Integer.parseInt(storageFields[0]);
+        String name = storageFields[2];
+        String status = storageFields[3];
+        String description = storageFields[4];
+        double price = Double.parseDouble(storageFields[5]);
 
-    @Override
-    public boolean canCreateFromKeyboard(String createProductType) {
-        return createProductType.equals(ProductType.CAR_AND_ELECTRONIC_PACKAGE);
-    }
-
-    @Override
-    public Product createFromStorageData(String[] storageData) {
-        int id = Integer.parseInt(storageData[0]);
-        String name = storageData[2];
-        String status = storageData[3];
-        String description = storageData[4];
-        double price = Double.parseDouble(storageData[5]);
-
-        Car car = (Car) Product.fromStorageString(storageData[6]);
-        Electronic electronic = (Electronic) Product.fromStorageString(storageData[7]);
+        Car car = (Car) Product.fromStorageString(storageFields[6]);
+        Electronic electronic = (Electronic) Product.fromStorageString(storageFields[7]);
 
         return new CarAndElectronicPackage(id, name, status, description, price, car, electronic);
     }
 
     @Override
-    public Product createFromKeyboard(Scanner keyboard, int newId) {
+    public CarAndElectronicPackage createFromKeyboard(Scanner keyboard, int newId) {
         String name = InputUtils.promptString(keyboard, "Enter package name: ");
         String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter package description: ");
         double price = InputUtils.promptDouble(keyboard, "Enter package price: $", 0);
 
         System.out.println("---Please enter car information now---");
-        Car car = (Car) carCreator.createFromKeyboard(keyboard, newId);
+        Car car = carCreator.createFromKeyboard(keyboard, newId);
         car.setStatus("N/A");
 
         System.out.println("---Please enter electronic information now---");
-        Electronic electronic = (Electronic) electronicCreator.createFromKeyboard(keyboard, newId);
+        Electronic electronic = electronicCreator.createFromKeyboard(keyboard, newId);
         electronic.setStatus("N/A");
 
         return new CarAndElectronicPackage(newId, name, status, description, price, car, electronic);

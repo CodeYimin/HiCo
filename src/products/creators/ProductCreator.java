@@ -4,12 +4,18 @@ import java.util.Scanner;
 
 import products.Product;
 
-public interface ProductCreator {
-    public boolean canCreateFromKeyboard(String createProductType);
+public abstract class ProductCreator<T extends Product> {
+    private final String type;
 
-    public boolean canCreateFromStorageData(String[] storageData);
+    public ProductCreator(String type) {
+        this.type = type;
+    }
 
-    public Product createFromKeyboard(Scanner keyboard, int newId);
+    public String getType() {
+        return type;
+    }
 
-    public Product createFromStorageData(String[] storageData);
+    public abstract T createFromKeyboard(Scanner keyboard, int newId);
+
+    public abstract T createFromStorageFields(String[] storageFields);
 }

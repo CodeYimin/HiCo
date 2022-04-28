@@ -3,36 +3,29 @@ package products.creators;
 import java.util.Scanner;
 
 import products.Electronic;
-import products.Product;
 import products.constants.ProductStatus;
 import products.constants.ProductType;
 import utils.InputUtils;
 
-public class ElectronicCreator implements ProductCreator {
-    @Override
-    public boolean canCreateFromStorageData(String[] storageData) {
-        return storageData[1].equals(ProductType.ELECTRONIC);
+public class ElectronicCreator extends ProductCreator<Electronic> {
+    public ElectronicCreator() {
+        super(ProductType.ELECTRONIC);
     }
 
     @Override
-    public boolean canCreateFromKeyboard(String createProductType) {
-        return createProductType.equals(ProductType.ELECTRONIC);
-    }
-
-    @Override
-    public Product createFromStorageData(String[] storageData) {
-        int id = Integer.parseInt(storageData[0]);
-        String name = storageData[2];
-        String status = storageData[3];
-        String description = storageData[4];
-        double price = Double.parseDouble(storageData[5]);
-        double wattage = Double.parseDouble(storageData[6]);
+    public Electronic createFromStorageFields(String[] storageFields) {
+        int id = Integer.parseInt(storageFields[0]);
+        String name = storageFields[2];
+        String status = storageFields[3];
+        String description = storageFields[4];
+        double price = Double.parseDouble(storageFields[5]);
+        double wattage = Double.parseDouble(storageFields[6]);
 
         return new Electronic(id, name, status, description, price, wattage);
     }
 
     @Override
-    public Product createFromKeyboard(Scanner keyboard, int newId) {
+    public Electronic createFromKeyboard(Scanner keyboard, int newId) {
         String name = InputUtils.promptString(keyboard, "Enter electronic name: ");
         String status = ProductStatus.REQUESTED;
         String description = InputUtils.promptString(keyboard, "Enter electronic description: ");

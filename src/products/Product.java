@@ -10,11 +10,11 @@ import products.creators.ProductCreator;
 import utils.ArrayUtils;
 
 public abstract class Product {
-    private static final ProductCreator[] PRODUCT_CREATORS = {
+    private static final ProductCreator<?>[] PRODUCT_CREATORS = {
             new BodywearCreator(),
             new CarCreator(),
             new ElectronicCreator(),
-            new CarAndElectronicPackageCreator(new CarCreator(), new ElectronicCreator())
+            new CarAndElectronicPackageCreator()
     };
 
     private final int id;
@@ -102,17 +102,18 @@ public abstract class Product {
 
     public static Product fromStorageString(String storageString) {
         String[] storageFields = decodeFields(storageString);
-        for (ProductCreator productCreator : PRODUCT_CREATORS) {
-            if (productCreator.canCreateFromStorageData(storageFields)) {
-                return productCreator.createFromStorageData(storageFields);
+        String type = storageFields[1];
+        for (ProductCreator<?> productCreator : PRODUCT_CREATORS) {
+            if (productCreator.getType().equals(type)) {
+                return productCreator.createFromStorageFields(storageFields);
             }
         }
         return null;
     }
 
     public static Product fromKeyboard(String type, Scanner keyboard, int newId) {
-        for (ProductCreator productCreator : PRODUCT_CREATORS) {
-            if (productCreator.canCreateFromKeyboard(type)) {
+        for (ProductCreator<?> productCreator : PRODUCT_CREATORS) {
+            if (productCreator.getType().equals(type)) {
                 return productCreator.createFromKeyboard(keyboard, newId);
             }
         }
