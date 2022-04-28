@@ -170,8 +170,7 @@ public abstract class Product {
     @Override
     public final String toString() {
         /*
-         * Borders and padding are generated automatically at the end and are not
-         * included in calculations.
+         * Borders and padding are generated automatically at the end
          * Example Output:
          * @formatter:off
          * +----------------------------------+
