@@ -6,4 +6,5 @@
 4,Car,High Jumping Car,AVAILABLE,A car made by intelligent bunnies. Capable of jumping 100 metres.,5000000.0,50000.0
 9,Bodywear,Elytra,REQUESTED,Glide around with a pair of wings!,98888.0,10.0,Small
 8,Electronic,Grigorov Coin Miner,AVAILABLE,Invest early...,50000.0,56000.0
-5,Car,Tai Lopez's Car,AVAILABLE,Back in my garage with my lamborghini.,750000.0,10000.0
+5,Car,Tai Lopez's Car,SOLD,Back in my garage with my lamborghini.,750000.0,10000.0
+10,Car,New car,REQUESTED,car\, new,555.0,5.0

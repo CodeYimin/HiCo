@@ -1,18 +1,15 @@
 package core;
 
 import products.Product;
-import products.creators.ProductCreator;
 import products.filters.ProductFilter;
 import products.filters.ProductIdFilter;
 import utils.ArrayUtils;
 
 public class ProductStorage {
     final FileManager fileManager;
-    final ProductCreator[] productCreators;
 
-    public ProductStorage(FileManager fileManager, ProductCreator[] productCreators) {
+    public ProductStorage(FileManager fileManager) {
         this.fileManager = fileManager;
-        this.productCreators = productCreators;
     }
 
     public int getMaxProductId() throws Exception {
@@ -23,22 +20,6 @@ public class ProductStorage {
             }
         }
         return maxProductId;
-    }
-
-    private static String[] decodeFields(String data) {
-        String[] decodedData = data.split("(?<!\\\\),");
-        decodedData = ArrayUtils.replaceAll(decodedData, "\\\\,", ",");
-        return decodedData;
-    }
-
-    private Product storageStringToProduct(String storageString) {
-        String[] storageFields = decodeFields(storageString);
-        for (ProductCreator productCreator : productCreators) {
-            if (productCreator.canCreateFromStorageData(storageFields)) {
-                return productCreator.createFromStorageData(storageFields);
-            }
-        }
-        return null;
     }
 
     public void addProduct(Product product) throws Exception {
@@ -68,12 +49,11 @@ public class ProductStorage {
     }
 
     public Product[] getProducts() throws Exception {
-        String[] productStrings = fileManager.readLines();
+        String[] productStorageStrings = fileManager.readLines();
 
-        Product[] products = new Product[productStrings.length];
-
-        for (int i = 0; i < productStrings.length; i++) {
-            products[i] = storageStringToProduct(productStrings[i]);
+        Product[] products = new Product[productStorageStrings.length];
+        for (int i = 0; i < productStorageStrings.length; i++) {
+            products[i] = Product.fromStorageString(productStorageStrings[i]);
         }
 
         return products;

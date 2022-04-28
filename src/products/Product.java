@@ -1,8 +1,20 @@
 package products;
 
+import java.util.Scanner;
+
+import products.creators.BodywearCreator;
+import products.creators.CarCreator;
+import products.creators.ElectronicCreator;
+import products.creators.ProductCreator;
 import utils.ArrayUtils;
 
 public abstract class Product {
+    private static final ProductCreator[] PRODUCT_CREATORS = {
+            new BodywearCreator(),
+            new CarCreator(),
+            new ElectronicCreator()
+    };
+
     private final int id;
     private final String type;
     private String status;
@@ -59,6 +71,17 @@ public abstract class Product {
         this.status = status;
     }
 
+    private static String encodeFields(String[] fields) {
+        String[] encodedFields = ArrayUtils.replaceAll(fields, ",", "\\\\,");
+        return ArrayUtils.join(encodedFields, ",");
+    }
+
+    private static String[] decodeFields(String data) {
+        String[] decodedData = data.split("(?<!\\\\),");
+        decodedData = ArrayUtils.replaceAll(decodedData, "\\\\,", ",");
+        return decodedData;
+    }
+
     public abstract String[] extraStorageFields();
 
     public final String toStorageString() {
@@ -72,10 +95,26 @@ public abstract class Product {
         };
         String[] fullStorageFields = ArrayUtils.concat(storageFields, extraStorageFields());
 
-        String[] encodedFields = ArrayUtils.replaceAll(fullStorageFields, ",", "\\\\,");
-        String encodedString = ArrayUtils.join(encodedFields, ",");
+        return encodeFields(fullStorageFields);
+    }
 
-        return encodedString;
+    public static Product fromStorageString(String storageString) {
+        String[] storageFields = decodeFields(storageString);
+        for (ProductCreator productCreator : PRODUCT_CREATORS) {
+            if (productCreator.canCreateFromStorageData(storageFields)) {
+                return productCreator.createFromStorageData(storageFields);
+            }
+        }
+        return null;
+    }
+
+    public static Product fromKeyboard(String type, Scanner keyboard, int newId) {
+        for (ProductCreator productCreator : PRODUCT_CREATORS) {
+            if (productCreator.canCreateFromKeyboard(type)) {
+                return productCreator.createFromKeyboard(keyboard, newId);
+            }
+        }
+        return null;
     }
 
     @Override

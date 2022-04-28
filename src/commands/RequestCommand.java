@@ -7,22 +7,17 @@ import core.CommandManager;
 import core.ProductStorage;
 import products.Product;
 import products.constants.ProductType;
-import products.creators.ProductCreator;
 import utils.InputUtils;
 
 public class RequestCommand extends ProductCommand {
-    private final ProductCreator[] productCreators;
-
-    public RequestCommand(String name, String description, ProductStorage productStorage, ProductCreator[] productCreators) {
+    public RequestCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
-        this.productCreators = productCreators;
     }
 
     public void execute(CommandManager commandManager) {
         Scanner keyboard = commandManager.getKeyboard();
         ProductStorage productStorage = getProductStorage();
 
-        Product newProduct = null;
         int newId;
         try {
             newId = productStorage.getMaxProductId() + 1;
@@ -38,13 +33,7 @@ public class RequestCommand extends ProductCommand {
         String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, false);
         String type = ProductType.fromString(typeInput);
 
-        // Try to create a product with the given type using the product creators
-        for (ProductCreator productCreator : productCreators) {
-            if (productCreator.canCreateFromKeyboard(type)) {
-                newProduct = productCreator.createFromKeyboard(keyboard, newId);
-            }
-        }
-
+        Product newProduct = Product.fromKeyboard(type, keyboard, newId);
         if (newProduct == null) {
             System.out.println("Failed to request new product.");
             return;
