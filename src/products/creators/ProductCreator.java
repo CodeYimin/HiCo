@@ -4,6 +4,13 @@ import java.util.Scanner;
 
 import products.Product;
 
+/**
+ * The base class for all product creators which creates products
+ * through user keyboard input or file storage input.
+ * 
+ * @param <T>
+ *            The type of product the creator creates.
+ */
 public abstract class ProductCreator<T extends Product> {
     private final String type;
 

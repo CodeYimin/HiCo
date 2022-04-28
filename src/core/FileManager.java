@@ -7,6 +7,10 @@ import java.util.Scanner;
 
 import utils.ArrayUtils;
 
+/**
+ * The file manager is responsible for providing functionality
+ * for easily saving and loading data from files.
+ */
 public class FileManager {
     private final File file;
 
@@ -26,6 +30,13 @@ public class FileManager {
         }
     }
 
+    /**
+     * Overrides the entire file with new lines.
+     * 
+     * @param lines
+     *            lines to override the file with
+     * @throws Exception
+     */
     public void writeLines(String[] lines) throws Exception {
         createFileIfNotExist();
         PrintWriter writer = new PrintWriter(file);
@@ -35,6 +46,12 @@ public class FileManager {
         writer.close();
     }
 
+    /**
+     * Read all lines from the file.
+     * 
+     * @return all lines from the file
+     * @throws Exception
+     */
     public String[] readLines() throws Exception {
         createFileIfNotExist();
         String[] lines = {};
@@ -49,6 +66,13 @@ public class FileManager {
         return lines;
     }
 
+    /**
+     * Appends a new line to the end of the file without overriding the file.
+     * 
+     * @param line
+     *            the line to append
+     * @throws Exception
+     */
     public void addLine(String line) throws Exception {
         final boolean APPEND = true;
         createFileIfNotExist();

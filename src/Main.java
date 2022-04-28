@@ -29,9 +29,10 @@ public class Main {
 				new ListCommand("list", "List all products with optional filtering/sorting.", productStorage),
 				new RequestCommand(
 						"request",
-						"Add an item to inventory (e.g. when a shipment from the supplier arrives, or when returned).",
+						"Request a new product to be added to the store",
 						productStorage),
-				new AddItemCommand("add", "Add a new product to the store.", productStorage),
+				new AddItemCommand("add", "Add an item to inventory (e.g. when a shipment from the supplier arrives, or when returned).",
+						productStorage),
 				new HoldCommand("hold", "Put a product on hold (e.g. for online orders).", productStorage),
 				new SellCommand("sell", "Mark a product as sold.", productStorage),
 				new ReturnCommand("return", "Return a product to the store.", productStorage)

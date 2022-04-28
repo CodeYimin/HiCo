@@ -28,17 +28,21 @@ public class ProductStorage {
 
     public Product removeProduct(Product product) throws Exception {
         Product[] products = getProducts();
+
+        // Find product to remove and remove it
         Product removedProduct = null;
         for (Product p : products) {
             if (removedProduct == null && p.equals(product)) {
                 removedProduct = p;
-                products = ArrayUtils.slice(products, p);
+                products = ArrayUtils.slice(products, removedProduct);
             }
         }
         if (removedProduct == null) {
             return null;
         }
 
+        // Convert the updated products array
+        // to string format to override the file with the new content
         String[] productStorageStrings = new String[products.length];
         for (int i = 0; i < productStorageStrings.length; i++) {
             productStorageStrings[i] = products[i].toStorageString();
@@ -49,10 +53,12 @@ public class ProductStorage {
     }
 
     public Product[] getProducts() throws Exception {
+        // Get the raw lines from the file. Each line represents a product.
         String[] productStorageStrings = fileManager.readLines();
 
         Product[] products = new Product[productStorageStrings.length];
         for (int i = 0; i < productStorageStrings.length; i++) {
+            // Convert the raw line to a product object in memory.
             products[i] = Product.fromStorageString(productStorageStrings[i]);
         }
 
@@ -107,6 +113,12 @@ public class ProductStorage {
         return getProduct(product) != null;
     }
 
+    /**
+     * Syncs the product in the storage with the product in memory.
+     * 
+     * @param product
+     * @throws Exception
+     */
     public void syncProduct(Product product) throws Exception {
         if (removeProduct(product) != null) {
             addProduct(product);

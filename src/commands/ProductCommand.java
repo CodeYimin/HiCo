@@ -2,6 +2,10 @@ package commands;
 
 import core.ProductStorage;
 
+/**
+ * The base class for all commands that require
+ * access to a product storage to operate on.
+ */
 public abstract class ProductCommand extends Command {
     private final ProductStorage productStorage;
 

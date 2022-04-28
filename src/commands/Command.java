@@ -2,6 +2,9 @@ package commands;
 
 import core.CommandManager;
 
+/**
+ * The base class for all commands.
+ */
 public abstract class Command {
     private final String name;
     private final String description;

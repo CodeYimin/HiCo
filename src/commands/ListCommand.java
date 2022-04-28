@@ -17,6 +17,10 @@ import products.filters.ProductTypeFilter;
 import utils.ArrayUtils;
 import utils.InputUtils;
 
+/**
+ * Command to list all available products.
+ * With optional filters and sorting options.
+ */
 public class ListCommand extends ProductCommand {
     public ListCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
@@ -30,6 +34,7 @@ public class ListCommand extends ProductCommand {
         String[] useFilterOptions = { "y", "n" };
         String useFilter = InputUtils.promptString(keyboard, "Use filters? (y/N): ", useFilterOptions, true);
 
+        // Print everything if no filters are used
         if (!useFilter.equalsIgnoreCase("y")) {
             Product[] products = null;
 
@@ -48,7 +53,7 @@ public class ListCommand extends ProductCommand {
             return;
         }
 
-        // Ask for user input filters
+        // Ask user for filters
         final boolean ALLOW_BLANK_STATUS = true;
         final boolean ALLOW_BLANK_TYPE = true;
         final boolean ALLOW_BLANK_SORT_BY = true;
@@ -67,15 +72,13 @@ public class ListCommand extends ProductCommand {
         String sortPrompt = "(Enter to skip) Sort by " + Arrays.toString(sortOptions) + ": ";
         String sort = InputUtils.promptString(keyboard, sortPrompt, sortOptions, ALLOW_BLANK_SORT_BY);
 
-        // Set filters
+        // Save filters
         ProductFilter[] filters = {};
         if (status != null) {
-            ProductFilter statusFilter = new ProductStatusFilter(status);
-            filters = ArrayUtils.concat(filters, statusFilter);
+            filters = ArrayUtils.concat(filters, new ProductStatusFilter(status));
         }
         if (type != null) {
-            ProductFilter typeFilter = new ProductTypeFilter(type);
-            filters = ArrayUtils.concat(filters, typeFilter);
+            filters = ArrayUtils.concat(filters, new ProductTypeFilter(type));
         }
 
         // Get filtered products
