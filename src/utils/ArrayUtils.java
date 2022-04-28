@@ -58,6 +58,10 @@ public class ArrayUtils {
     }
 
     public static String toStringList(Object[] array) {
+        if (array.length == 0) {
+            return "";
+        }
+
         String string = "";
         for (Object element : array) {
             string += "- " + element + "\n";

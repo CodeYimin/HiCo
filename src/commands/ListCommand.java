@@ -31,13 +31,19 @@ public class ListCommand extends ProductCommand {
         String useFilter = InputUtils.promptString(keyboard, "Use filters? (y/N): ", useFilterOptions, true);
 
         if (!useFilter.equalsIgnoreCase("y")) {
-            System.out.println("All products: ");
-            Product[] products;
+            Product[] products = null;
+
             try {
                 products = productStorage.getProducts();
-                System.out.println(ArrayUtils.toStringList(products));
             } catch (Exception e) {
                 System.out.println("Failed to retrieve products.");
+            }
+
+            if (products.length == 0) {
+                System.out.println("No products.");
+            } else {
+                System.out.println("All products:");
+                System.out.println(ArrayUtils.toStringList(products));
             }
             return;
         }
