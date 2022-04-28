@@ -11,7 +11,7 @@ import utils.InputUtils;
 public class CarCreator implements ProductCreator {
     @Override
     public boolean canCreateFromStorageData(String[] storageData) {
-        return storageData[0].equals(ProductType.CAR);
+        return storageData[1].equals(ProductType.CAR);
     }
 
     @Override
@@ -21,14 +21,14 @@ public class CarCreator implements ProductCreator {
 
     @Override
     public Product createFromStorageData(String[] storageData) {
-        int id = Integer.parseInt(storageData[1]);
-        String status = storageData[2];
-        String name = storageData[3];
+        int id = Integer.parseInt(storageData[0]);
+        String name = storageData[2];
+        String status = storageData[3];
         String description = storageData[4];
         double price = Double.parseDouble(storageData[5]);
         double rangeKm = Double.parseDouble(storageData[6]);
 
-        return new Car(id, status, name, description, price, rangeKm);
+        return new Car(id, name, status, description, price, rangeKm);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class CarCreator implements ProductCreator {
         double price = InputUtils.promptDouble(keyboard, "Enter price: $", 0);
         double rangeKm = InputUtils.promptDouble(keyboard, "Enter range (km): ", 0);
 
-        return new Car(newId, status, name, description, price, rangeKm);
+        return new Car(newId, name, status, description, price, rangeKm);
     }
 }

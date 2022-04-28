@@ -65,11 +65,11 @@ public class ListCommand extends ProductCommand {
         ProductFilter[] filters = {};
         if (status != null) {
             ProductFilter statusFilter = new ProductStatusFilter(status);
-            filters = ArrayUtils.withElement(filters, statusFilter);
+            filters = ArrayUtils.concat(filters, statusFilter);
         }
         if (type != null) {
             ProductFilter typeFilter = new ProductTypeFilter(type);
-            filters = ArrayUtils.withElement(filters, typeFilter);
+            filters = ArrayUtils.concat(filters, typeFilter);
         }
 
         // Get filtered products

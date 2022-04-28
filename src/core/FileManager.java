@@ -1,9 +1,12 @@
 package core;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
+import utils.ArrayUtils;
 
 public class FileManager {
     private final File file;
@@ -12,38 +15,47 @@ public class FileManager {
         this.file = file;
     }
 
-    private int getNumLines() throws Exception {
-        int numLines = 0;
-
-        Scanner scanner = new Scanner(file);
-        while (scanner.hasNextLine()) {
-            scanner.nextLine();
-            numLines++;
+    private void createFileIfNotExist() {
+        try {
+            file.createNewFile();
+        } catch (Exception e) {
+            System.out.println("Failed to create file.");
         }
-        scanner.close();
-
-        return numLines;
     }
 
     public void writeLines(String[] lines) throws Exception {
-        PrintWriter writer = new PrintWriter(file);
-        for (String line : lines) {
-            writer.println(line);
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            for (String line : lines) {
+                writer.println(line);
+            }
+            writer.close();
+        } catch (FileNotFoundException error) {
+            createFileIfNotExist();
+            writeLines(lines);
+        } catch (Exception error) {
+            throw error;
         }
-        writer.close();
     }
 
     public String[] readLines() throws Exception {
-        int numLines = getNumLines();
-        String[] lines = new String[numLines];
+        try {
+            String[] lines = {};
 
-        Scanner scanner = new Scanner(file);
-        for (int i = 0; i < numLines; i++) {
-            lines[i] = scanner.nextLine();
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                lines = ArrayUtils.concat(lines, line);
+            }
+            scanner.close();
+
+            return lines;
+        } catch (FileNotFoundException error) {
+            createFileIfNotExist();
+            return readLines();
+        } catch (Exception error) {
+            throw error;
         }
-        scanner.close();
-
-        return lines;
     }
 
     public void addLine(String line) throws Exception {

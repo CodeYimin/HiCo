@@ -1,22 +1,30 @@
 package products;
 
+import utils.ArrayUtils;
+
 public abstract class Product {
     private final int id;
+    private final String type;
     private String status;
     private String name;
     private String description;
     private double price;
 
-    public Product(int id, String status, String name, String description, double price) {
+    public Product(int id, String type, String name, String status, String description, double price) {
         this.id = id;
-        this.status = status;
+        this.type = type;
         this.name = name;
+        this.status = status;
         this.description = description;
         this.price = price;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public String getName() {
@@ -51,7 +59,24 @@ public abstract class Product {
         this.status = status;
     }
 
-    public abstract String[] toStorageData();
+    public abstract String[] extraStorageData();
+
+    public final String toStorageData() {
+        String[] storageFields = {
+                String.valueOf(getId()),
+                getType(),
+                getName(),
+                getStatus(),
+                getDescription(),
+                String.valueOf(getPrice())
+        };
+        String[] fullStorageFields = ArrayUtils.concat(storageFields, extraStorageData());
+
+        String[] encodedFields = ArrayUtils.replaceAll(fullStorageFields, ",", "\\\\,");
+        String encodedString = ArrayUtils.join(encodedFields, ",");
+
+        return encodedString;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -66,7 +91,11 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "ID: " + id + " | Status: " + status +
-                " | Name: " + name + " | Description: " + description + " | Price: $" + price;
+        return "ID: " + id
+                + " | Type: " + type
+                + " | Name: " + name
+                + " | Status: " + status
+                + " | Description: " + description
+                + " | Price: $" + price;
     }
 }

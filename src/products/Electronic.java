@@ -6,7 +6,7 @@ public class Electronic extends Product {
     private double wattage;
 
     public Electronic(int id, String name, String status, String description, double price, double wattage) {
-        super(id, name, status, description, price);
+        super(id, ProductType.ELECTRONIC, name, status, description, price);
         this.wattage = wattage;
     }
 
@@ -20,17 +20,7 @@ public class Electronic extends Product {
     }
 
     @Override
-    public String[] toStorageData() {
-        String[] storageData = {
-                ProductType.ELECTRONIC,
-                String.valueOf(getId()),
-                getStatus(),
-                getName(),
-                getDescription(),
-                String.valueOf(getPrice()),
-                String.valueOf(getWattage())
-        };
-
-        return storageData;
+    public String[] extraStorageData() {
+        return new String[] { String.valueOf(getWattage()) };
     }
 }

@@ -11,7 +11,7 @@ import utils.InputUtils;
 public class BodywearCreator implements ProductCreator {
     @Override
     public boolean canCreateFromStorageData(String[] storageData) {
-        return storageData[0].equals(ProductType.BODYWEAR);
+        return storageData[1].equals(ProductType.BODYWEAR);
     }
 
     @Override
@@ -21,15 +21,15 @@ public class BodywearCreator implements ProductCreator {
 
     @Override
     public Product createFromStorageData(String[] storageData) {
-        int id = Integer.parseInt(storageData[1]);
-        String status = storageData[2];
-        String name = storageData[3];
+        int id = Integer.parseInt(storageData[0]);
+        String name = storageData[2];
+        String status = storageData[3];
         String description = storageData[4];
         double price = Double.parseDouble(storageData[5]);
         double weightKg = Double.parseDouble(storageData[6]);
         String size = storageData[7];
 
-        return new Bodywear(id, status, name, description, price, weightKg, size);
+        return new Bodywear(id, name, status, description, price, weightKg, size);
     }
 
     @Override
@@ -41,6 +41,6 @@ public class BodywearCreator implements ProductCreator {
         double weightKg = InputUtils.promptDouble(keyboard, "Enter weight (kg): ", 0);
         String size = InputUtils.promptString(keyboard, "Enter size: ");
 
-        return new Bodywear(newId, status, name, description, price, weightKg, size);
+        return new Bodywear(newId, name, status, description, price, weightKg, size);
     }
 }

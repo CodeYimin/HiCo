@@ -8,7 +8,7 @@ public class Bodywear extends Product {
 
     public Bodywear(int id, String name, String status, String description, double price, double weightKg,
             String size) {
-        super(id, name, status, description, price);
+        super(id, ProductType.BODYWEAR, name, status, description, price);
         this.weightKg = weightKg;
         this.size = size;
     }
@@ -29,18 +29,10 @@ public class Bodywear extends Product {
     }
 
     @Override
-    public String[] toStorageData() {
-        String[] storageData = {
-                ProductType.BODYWEAR,
-                String.valueOf(getId()),
-                getStatus(),
-                getName(),
-                getDescription(),
-                String.valueOf(getPrice()),
+    public String[] extraStorageData() {
+        return new String[] {
                 String.valueOf(getWeightKg()),
                 getSize()
         };
-
-        return storageData;
     }
 }

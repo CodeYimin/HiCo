@@ -27,7 +27,8 @@ public class RequestCommand extends ProductCommand {
         try {
             newId = productStorage.getMaxProductId() + 1;
         } catch (Exception e) {
-            System.out.println("Failed to request a new product id.");
+            System.out.println("Failed to generate a new product id.");
+            e.printStackTrace();
             return;
         }
 

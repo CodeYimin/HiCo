@@ -25,35 +25,24 @@ public class ProductStorage {
         return maxProductId;
     }
 
-    private static String encodeData(String[] data) {
-        String[] encodedData = ArrayUtils.replaceAll(data, ",", "\\\\,");
-        String encodedString = ArrayUtils.join(encodedData, ",");
-        return encodedString;
-    }
-
-    private static String[] decodeData(String data) {
+    private static String[] decodeFields(String data) {
         String[] decodedData = data.split("(?<!\\\\),");
         decodedData = ArrayUtils.replaceAll(decodedData, "\\\\,", ",");
         return decodedData;
     }
 
-    private String encodeProduct(Product product) {
-        return encodeData(product.toStorageData());
-    }
-
     private Product decodeProduct(String storageString) {
-        String[] storageData = decodeData(storageString);
+        String[] storageFields = decodeFields(storageString);
         for (ProductCreator productCreator : productCreators) {
-            if (productCreator.canCreateFromStorageData(storageData)) {
-                return productCreator.createFromStorageData(storageData);
+            if (productCreator.canCreateFromStorageData(storageFields)) {
+                return productCreator.createFromStorageData(storageFields);
             }
         }
         return null;
     }
 
     public void addProduct(Product product) throws Exception {
-        String storageString = encodeProduct(product);
-        fileManager.addLine(storageString);
+        fileManager.addLine(product.toStorageData());
     }
 
     public Product removeProduct(Product product) throws Exception {
@@ -62,7 +51,7 @@ public class ProductStorage {
         for (Product p : products) {
             if (removedProduct == null && p.equals(product)) {
                 removedProduct = p;
-                products = ArrayUtils.withoutElement(products, p);
+                products = ArrayUtils.slice(products, p);
             }
         }
         if (removedProduct == null) {
@@ -71,7 +60,7 @@ public class ProductStorage {
 
         String[] encodedProducts = new String[products.length];
         for (int i = 0; i < encodedProducts.length; i++) {
-            encodedProducts[i] = encodeProduct(products[i]);
+            encodedProducts[i] = products[i].toStorageData();
         }
         fileManager.writeLines(encodedProducts);
 
@@ -102,7 +91,7 @@ public class ProductStorage {
                 }
             }
             if (!isFiltered) {
-                filteredProducts = ArrayUtils.withElement(filteredProducts, product);
+                filteredProducts = ArrayUtils.concat(filteredProducts, product);
             }
         }
 

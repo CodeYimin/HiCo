@@ -1,9 +1,9 @@
-Car,2,ON_HOLD,Lamborghini,Very fast car.,500000.0,50000.0
-Bodywear,3,AVAILABLE,Pants,Regular\, boring costco pants.,5.5,0.1,Large
-Bodywear,6,AVAILABLE,Pants,Regular\, boring costco pants.,5.35,0.1,Medium
-Bodywear,1,SOLD,Ironman suit,Original iron's man suit capable of many features.,8000000.0,500.0,X-Large
-Car,5,RETURNED,Tai Lopez's Car,Back in my garage with my lamborghini.,750000,10000
-Electronic,7,REQUESTED,Play Station 15,Newest gen console!!! HOT!!!,5599.99,2500.0
-Car,4,AVAILABLE,High Jumping Car,A car made by intelligent bunnies. Capable of jumping 100 metres.,5000000.0,50000.0
-Bodywear,9,REQUESTED,Elytra,Glide around with a pair of wings!,98888,10,Small
-Electronic,8,AVAILABLE,Grigorov Coin Miner,Invest early...,50000.0,56000.0
+2,Car,Lamborghini,ON_HOLD,Very fast car.,500000.0,50000.0
+3,Bodywear,Pants,AVAILABLE,Regular\, boring costco pants.,5.5,0.1,Large
+6,Bodywear,Pants,AVAILABLE,Regular\, boring costco pants.,5.35,0.1,Medium
+1,Bodywear,Ironman suit,SOLD,Original iron's man suit capable of many features.,8000000.0,500.0,X-Large
+5,Car,Tai Lopez's Car,RETURNED,Back in my garage with my lamborghini.,750000,10000
+7,Electronic,Play Station 15,REQUESTED,Newest gen console!!! HOT!!!,5599.99,2500.0
+4,Car,High Jumping Car,AVAILABLE,A car made by intelligent bunnies. Capable of jumping 100 metres.,5000000.0,50000.0
+9,Bodywear,Elytra,REQUESTED,Glide around with a pair of wings!,98888,10,Small
+8,Electronic,Grigorov Coin Miner,AVAILABLE,Invest early...,50000.0,56000.0
