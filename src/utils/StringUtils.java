@@ -10,8 +10,8 @@ public class StringUtils {
     }
 
     /**
-     * Pads the string with spaces until the total string length is equal to the
-     * specified length.
+     * Pads the string with spaces on the right
+     * until the total string length is equal to the specified length.
      * 
      * @param string
      * @param length

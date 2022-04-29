@@ -15,9 +15,8 @@ public class ProductCommandHelper {
     /**
      * Prompts the user for a product id to change the status of.
      * The method then attempts to change the status of the product. If the product
-     * is found,
-     * and its status is part of eligibleFromStatuses, its status is changed to
-     * toStatus.
+     * is found, and its current status is part of eligibleFromStatuses, its status
+     * is changed to toStatus.
      * Otherwise, nothing is changed and the failMessage is printed.
      * 
      * @param keyboard
@@ -31,7 +30,8 @@ public class ProductCommandHelper {
      * @param successMessage
      *            The message to print if the product is successfully changed.
      * @param failMessage
-     *            The message to print if the product is not successfully changed.
+     *            The message to print if the product's current status is not
+     *            eligible for change.
      * @return The product that was changed, or null if the product was not found or
      *         wasn't changed.
      */
@@ -63,7 +63,7 @@ public class ProductCommandHelper {
             System.out.println(successMessage);
             return product;
         } catch (Exception e) {
-            System.out.println(failMessage);
+            System.out.println("Failed to update product.");
             return null;
         }
     }

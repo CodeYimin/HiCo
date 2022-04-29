@@ -5,7 +5,7 @@ import java.util.Scanner;
 import commands.Command;
 
 /**
- * The command manager is responsible for listening to commands
+ * The command manager is responsible for listening to keyboard command input
  * and running the corresponding command on input.
  */
 public class CommandManager {

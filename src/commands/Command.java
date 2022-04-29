@@ -22,5 +22,11 @@ public abstract class Command {
         return description;
     };
 
+    /**
+     * This method is called when the command is executed.
+     *
+     * @param commandManager
+     *            The command manager that is executing the command.
+     */
     public abstract void execute(CommandManager commandManager);
 }

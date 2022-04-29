@@ -127,6 +127,14 @@ public abstract class Product {
 
     /**
      * Instantiates a product object from keyboard input
+     * 
+     * @param type
+     *            The type of product to create
+     * @param keyboard
+     *            The keyboard to read from
+     * @param newId
+     *            The id of the product to create
+     * @return The product created
      */
     public static Product fromKeyboard(String type, Scanner keyboard, int newId) {
         for (ProductCreator<?> productCreator : PRODUCT_CREATORS) {
@@ -138,7 +146,11 @@ public abstract class Product {
     }
 
     /**
-     * Extra data child classes can override to store extra data
+     * Allow child classes to override this method to store any
+     * extra fields not included in this base class
+     * when being written to file storage
+     * 
+     * @return The extra storage fields
      */
     public abstract String[] extraStorageFields();
 
@@ -165,22 +177,40 @@ public abstract class Product {
         return encodeFields(storageFields);
     }
 
+    /**
+     * Allow child classes to override this method
+     * to provide any extra body data to be displayed when
+     * the toString() method is called
+     * 
+     * Example: 
+     * @formatter:off
+     * +----------------------------------+
+     * | ID: 2 | Car | SOLD | $500000     |
+     * +----------------------------------+
+     * | Name: Toyota Corolla             |
+     * | Description: A car A car A car A |
+     * | !!!EXTRA CHILD BODY DATA HERE!!! | <-- This is where the child class overrides
+     * +----------------------------------+
+     * @formatter:on
+     * 
+     * @return The extra body data to be displayed
+     */
     public abstract String extraToStringBody();
 
+    /**
+     * Example Output:
+     * @formatter:off
+     * +----------------------------------------+
+     * | ID: 2 | Car | SOLD | $500000           |
+     * +----------------------------------------+
+     * | Name: Toyota Corolla                   |
+     * | Description: A car A car A car A       |
+     * | ...Additional details from child class |
+     * +----------------------------------------+
+     * @formatter:on
+     */
     @Override
     public final String toString() {
-        /*
-         * Borders and padding are generated automatically at the end
-         * Example Output:
-         * @formatter:off
-         * +----------------------------------+
-         * | ID: 2 | Car | SOLD | $500000     |
-         * +----------------------------------+
-         * | Name: Toyota Corolla             |
-         * | Description: A car A car A car A |
-         * +----------------------------------+
-         * @formatter:on
-         */
         String header = "ID: " + getId()
                 + " | " + getType()
                 + " | " + getStatus()

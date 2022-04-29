@@ -18,6 +18,10 @@ public class FileManager {
         this.file = file;
     }
 
+    /**
+     * Checks to see if the file associated with this file manager
+     * exists. If not, attempt to create the file.
+     */
     private void createFileIfNotExist() {
         if (file.exists()) {
             return;
@@ -39,6 +43,7 @@ public class FileManager {
      */
     public void writeLines(String[] lines) throws Exception {
         createFileIfNotExist();
+
         PrintWriter writer = new PrintWriter(file);
         for (String line : lines) {
             writer.println(line);
@@ -54,6 +59,7 @@ public class FileManager {
      */
     public String[] readLines() throws Exception {
         createFileIfNotExist();
+
         String[] lines = {};
 
         Scanner scanner = new Scanner(file);
@@ -74,8 +80,9 @@ public class FileManager {
      * @throws Exception
      */
     public void addLine(String line) throws Exception {
-        final boolean APPEND = true;
         createFileIfNotExist();
+
+        final boolean APPEND = true;
         FileWriter fileWriter = new FileWriter(file, APPEND);
         PrintWriter writer = new PrintWriter(fileWriter);
         writer.println(line);
