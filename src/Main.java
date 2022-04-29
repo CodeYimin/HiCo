@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import commands.AddItemCommand;
 import commands.Command;
+import commands.DeleteCommand;
 import commands.ExitCommand;
 import commands.HelpCommand;
 import commands.HoldCommand;
@@ -40,7 +41,8 @@ public class Main {
 						productStorage),
 				new HoldCommand("hold", "Put a product on hold (e.g. for online orders).", productStorage),
 				new SellCommand("sell", "Mark a product as sold.", productStorage),
-				new ReturnCommand("return", "Return a product to the store.", productStorage)
+				new ReturnCommand("return", "Return a product to the store.", productStorage),
+				new DeleteCommand("delete", "Permanently deletes a product record from this system.", productStorage)
 		};
 		Scanner keyboard = new Scanner(System.in);
 		CommandManager commandManager = new CommandManager(commands, keyboard);

@@ -108,4 +108,9 @@ public class InputUtils {
         }
         return response;
     }
+
+    public static boolean promptBoolean(Scanner keyboard, String prompt, String trueResponse, String falseResponse, boolean defaultValue) {
+        String response = promptString(keyboard, prompt, new String[] { trueResponse, falseResponse }, true);
+        return response.equalsIgnoreCase(trueResponse) || defaultValue;
+    }
 }

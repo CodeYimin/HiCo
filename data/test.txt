@@ -3,4 +3,3 @@
 11,Bodywear,Bracelet,REQUESTED,Small bracelet,50.0,0.1,Small
 12,Car,Honda Civic,AVAILABLE,This is a very good car please buy this car it is a good car,555555.69,500.0
 13,Car,Honda Civic,REQUESTED,This is a very good car please buy this car it is a good car,555555.69,500.0
-14,Car,Honda Civic,REQUESTED,This is a very good car please buy this car it is a good car,555555.69,500.0

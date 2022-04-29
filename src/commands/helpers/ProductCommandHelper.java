@@ -13,7 +13,34 @@ import utils.InputUtils;
  */
 public class ProductCommandHelper {
     /**
-     * Prompts the user for a product id to change the status of.
+     * Prompts the user to select a product from the product storage by id.
+     *
+     * @param keyboard
+     *            the keyboard to read from
+     * @param productStorage
+     *            the product storage to search
+     * @param prompt
+     *            The message displayed when asking user for ID
+     * @return the selected product
+     */
+    public static Product promptProductUsingId(Scanner keyboard, ProductStorage productStorage, String prompt) {
+        // Get product ID from user
+        int productId = InputUtils.promptInt(keyboard, prompt);
+
+        // Get product from storage
+        Product product;
+        try {
+            product = productStorage.getProduct(productId);
+        } catch (Exception e) {
+            System.out.println("Failed to get product.");
+            return null;
+        }
+
+        return product;
+    }
+
+    /**
+     * Prompts the user for a product to change the status of.
      * The method then attempts to change the status of the product. If the product
      * is found, and its current status is part of eligibleFromStatuses, its status
      * is changed to toStatus.
@@ -37,19 +64,10 @@ public class ProductCommandHelper {
      */
     public static Product promptProductStatusChange(Scanner keyboard, ProductStorage productStorage,
             String[] eligibleFromStatuses, String toStatus, String successMessage, String failMessage) {
-        // Get product ID from user
-        int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
+        Product product = promptProductUsingId(keyboard, productStorage, "Enter a product ID: ");
 
-        // Get product from storage
-        Product product;
-        try {
-            product = productStorage.getProduct(id);
-        } catch (Exception e) {
-            System.out.println("Failed to get product.");
-            return null;
-        }
         if (product == null) {
-            System.out.println("Product ID " + id + " does not exist.");
+            System.out.println("Product ID does not exist.");
             return null;
         }
 

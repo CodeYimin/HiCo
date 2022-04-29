@@ -31,11 +31,10 @@ public class ListCommand extends ProductCommand {
         ProductStorage productStorage = getProductStorage();
 
         // Enable filters?
-        String[] useFilterOptions = { "y", "n" };
-        String useFilter = InputUtils.promptString(keyboard, "Use filters? (y/N): ", useFilterOptions, true);
+        boolean useFilter = InputUtils.promptBoolean(keyboard, "Use filters? [y/N]: ", "y", "n", false);
 
-        // Print everything if no filters are used
-        if (!useFilter.equalsIgnoreCase("y")) {
+        // Print everything if filters not enabled
+        if (!useFilter) {
             Product[] products = null;
 
             try {

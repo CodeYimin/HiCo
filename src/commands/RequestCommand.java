@@ -3,6 +3,7 @@ package commands;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import commands.helpers.ProductCommandHelper;
 import core.CommandManager;
 import core.ProductStorage;
 import products.Product;
@@ -35,23 +36,16 @@ public class RequestCommand extends ProductCommand {
 
         // Choose whether to request brand new product or request a copy of an existing
         // product
-        String[] modeOptions = { "New", "Existing" };
+        String[] modeOptions = { "New", "Copy" };
         String modePrompt = "Would you like to request a brand new product or another copy of an existing product? "
                 + Arrays.toString(modeOptions) + ": ";
         String modeInput = InputUtils.promptString(keyboard, modePrompt, modeOptions, false);
 
-        if (modeInput.equalsIgnoreCase("existing")) {
-            int productId = InputUtils.promptInt(keyboard, "Enter the id of the product to request another copy of: ");
-            Product product = null;
-            // Get the product from storage
-            try {
-                product = productStorage.getProduct(productId);
-            } catch (Exception e) {
-                System.out.println("Failed to retrieve product.");
-                return;
-            }
+        if (modeInput.equalsIgnoreCase("copy")) {
+            Product product = ProductCommandHelper.promptProductUsingId(keyboard, productStorage,
+                    "Enter the ID of the product to request a copy of: ");
             if (product == null) {
-                System.out.println("No product with id " + productId + ".");
+                System.out.println("Product not found.");
                 return;
             }
 
@@ -67,7 +61,7 @@ public class RequestCommand extends ProductCommand {
                 System.out.println("Failed to request product.");
                 return;
             }
-            System.out.println("Requested another product with ID " + product.getId() + ".");
+            System.out.println("Requested a copy with ID " + product.getId() + ".");
         } else {
             // Request brand new product
 
