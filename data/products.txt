@@ -1,10 +1,8 @@
 2,Car,Lamborghini,ON_HOLD,Very fast car.,500000.0,50000.0
-3,Bodywear,Pants,AVAILABLE,Regular\, boring costco pants.,5.5,0.1,Large
-6,Bodywear,Pants,AVAILABLE,Regular\, boring costco pants.,5.35,0.1,Medium
 1,Bodywear,Ironman suit,SOLD,Original iron's man suit capable of many features.,8000000.0,500.0,X-Large
-5,Car,Tai Lopez's Car,RETURNED,Back in my garage with my lamborghini.,750000,10000
-7,Electronic,Play Station 15,REQUESTED,Newest gen console!!! HOT!!!,5599.99,2500.0
-4,Car,High Jumping Car,AVAILABLE,A car made by intelligent bunnies. Capable of jumping 100 metres.,5000000.0,50000.0
-9,Bodywear,Elytra,REQUESTED,Glide around with a pair of wings!,98888,10,Small
-8,Electronic,Grigorov Coin Miner,AVAILABLE,Invest early...,50000.0,56000.0
-10,CarAndElectronicPackage,Hypebeast package,REQUESTED,Latest gear at a discounted price,500000.0,10\,Car\,Supreme x Louis Vuitton Ferrari F12\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 12 in the world.\,400000.0\,3000.0,10\,Electronic\,Supreme x Louis Vuitton PS5\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 5 in the world.\,124999.99\,1500.0
+3,Car,Tai Lopez's Car,RETURNED,Back in my garage with my lamborghini...,750000,10000
+4,Electronic,Play Station 15,REQUESTED,Newest gen console!!! HOT!!!,5599.99,2500.0
+5,Car,High Jumping Car,AVAILABLE,A car made by bunnies. Capable of jumping 100 metres.,5000000.0,5000.0
+6,Bodywear,Elytra,REQUESTED,Glide around with a pair of wings!,9999.99,10,Small
+7,Electronic,Grigorov Coin Miner,AVAILABLE,Invest early...,50000.0,56000.0
+8,CarAndElectronicPackage,Hypebeast package,REQUESTED,Latest gear at a discounted price,1000000.0,10\,Car\,Supreme x Louis Vuitton Ferrari F12\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 12 in the world.\,900000.0\,3000.0,10\,Electronic\,Supreme x Louis Vuitton PS5\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 5 in the world.\,249999.99\,1500.0
