@@ -17,7 +17,7 @@ import core.FileManager;
 import core.ProductStorage;
 
 public class Main {
-	private static final String PRODUCT_STORAGE_FILE_PATH = "C:/Users/Yimin/Documents/Programming/Java/Grade 11/Assignments/HiCo/data/test.txt";
+	private static final String PRODUCT_STORAGE_FILE_PATH = "../data/test.txt";
 	private static final String WELCOME_MESSAGE = "Welcome to HiCo Inventory Management System! Type \"help\" for a list of commands.";
 
 	public static void main(String[] args) {
