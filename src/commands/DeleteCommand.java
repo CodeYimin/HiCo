@@ -8,6 +8,9 @@ import core.ProductStorage;
 import products.Product;
 import utils.InputUtils;
 
+/**
+ * Command which allows the user to delete a product from the product storage.
+ */
 public class DeleteCommand extends ProductCommand {
     public DeleteCommand(String name, String description, ProductStorage productStorage) {
         super(name, description, productStorage);
