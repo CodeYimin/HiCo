@@ -6,6 +6,7 @@ import java.util.Scanner;
 import core.CommandManager;
 import core.ProductStorage;
 import products.Product;
+import products.constants.ProductStatus;
 import products.constants.ProductType;
 import utils.InputUtils;
 
@@ -32,26 +33,65 @@ public class RequestCommand extends ProductCommand {
             return;
         }
 
-        // Get the type of product to create
-        String[] typeOptions = ProductType.getAllTypes();
-        String typePrompt = "Enter a product type " + Arrays.toString(typeOptions) + ": ";
-        String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, false);
-        String type = ProductType.fromString(typeInput);
+        // Choose whether to request brand new product or request a copy of an existing
+        // product
+        String[] modeOptions = { "New", "Existing" };
+        String modePrompt = "Would you like to request a brand new product or another copy of an existing product? "
+                + Arrays.toString(modeOptions) + ": ";
+        String modeInput = InputUtils.promptString(keyboard, modePrompt, modeOptions, false);
 
-        // Create the new product in memory
-        Product newProduct = Product.fromKeyboard(type, keyboard, generatedId);
-        if (newProduct == null) {
-            System.out.println("Failed to request new product.");
-            return;
-        }
+        if (modeInput.equalsIgnoreCase("existing")) {
+            int productId = InputUtils.promptInt(keyboard, "Enter the id of the product to request another copy of: ");
+            Product product = null;
+            // Get the product from storage
+            try {
+                product = productStorage.getProduct(productId);
+            } catch (Exception e) {
+                System.out.println("Failed to retrieve product.");
+                return;
+            }
+            if (product == null) {
+                System.out.println("No product with id " + productId + ".");
+                return;
+            }
 
-        // Save the new product from memory into the storage
-        try {
-            productStorage.addProduct(newProduct);
-            System.out.println("Successfully requested new product with ID " + newProduct.getId());
-        } catch (Exception e) {
-            System.out.println("Failed to request new product.");
-            e.printStackTrace();
+            // Product is only changed in memory, not persisted,
+            // so original product is unmodified
+            product.setId(generatedId);
+            product.setStatus(ProductStatus.REQUESTED);
+
+            // Safe to persist new product now, since id is changed
+            try {
+                productStorage.addProduct(product);
+            } catch (Exception e) {
+                System.out.println("Failed to request product.");
+                return;
+            }
+            System.out.println("Requested another product with ID " + product.getId() + ".");
+        } else {
+            // Request brand new product
+
+            // Get the type of product to create
+            String[] typeOptions = ProductType.getAllTypes();
+            String typePrompt = "Enter a product type " + Arrays.toString(typeOptions) + ": ";
+            String typeInput = InputUtils.promptString(keyboard, typePrompt, typeOptions, false);
+            String type = ProductType.fromString(typeInput);
+
+            // Create the new product in memory
+            Product newProduct = Product.fromKeyboard(type, keyboard, generatedId);
+            if (newProduct == null) {
+                System.out.println("Failed to request new product.");
+                return;
+            }
+
+            // Save the new product from memory into the storage
+            try {
+                productStorage.addProduct(newProduct);
+            } catch (Exception e) {
+                System.out.println("Failed to request new product.");
+                return;
+            }
+            System.out.println("Successfully requested brand new product with ID " + newProduct.getId());
         }
     }
 }

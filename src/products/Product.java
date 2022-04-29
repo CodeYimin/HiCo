@@ -20,7 +20,7 @@ public abstract class Product {
             new CarAndElectronicPackageCreator()
     };
 
-    private final int id;
+    private int id;
     private final String type;
     private String status;
     private String name;
@@ -38,6 +38,10 @@ public abstract class Product {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getType() {

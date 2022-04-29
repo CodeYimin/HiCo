@@ -37,8 +37,10 @@ public class ProductCommandHelper {
      */
     public static Product promptProductStatusChange(Scanner keyboard, ProductStorage productStorage,
             String[] eligibleFromStatuses, String toStatus, String successMessage, String failMessage) {
+        // Get product ID from user
         int id = InputUtils.promptInt(keyboard, "Enter a product ID: ");
 
+        // Get product from storage
         Product product;
         try {
             product = productStorage.getProduct(id);
@@ -57,14 +59,18 @@ public class ProductCommandHelper {
             return null;
         }
 
+        // Change product status
         product.setStatus(toStatus);
+
+        // Persist the change
         try {
             productStorage.syncProduct(product);
-            System.out.println(successMessage);
-            return product;
         } catch (Exception e) {
             System.out.println("Failed to update product.");
             return null;
         }
+
+        System.out.println(successMessage);
+        return product;
     }
 }

@@ -1,3 +1,6 @@
 1,Car,Honda Civic,REQUESTED,This is a very good car please buy this car it is a good car,555555.69,500.0
 10,CarAndElectronicPackage,Hypebeast package,REQUESTED,Latest gear at a discounted price,500000.0,10\,Car\,Supreme x Louis Vuitton Ferrari F12\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 12 in the world.\,400000.0\,3000.0,10\,Electronic\,Supreme x Louis Vuitton PS5\,N/A\,Exclusive Supreme and Louis Vuitton Collab. Only 5 in the world.\,124999.99\,1500.0
 11,Bodywear,Bracelet,REQUESTED,Small bracelet,50.0,0.1,Small
+12,Car,Honda Civic,AVAILABLE,This is a very good car please buy this car it is a good car,555555.69,500.0
+13,Car,Honda Civic,REQUESTED,This is a very good car please buy this car it is a good car,555555.69,500.0
+14,Car,Honda Civic,REQUESTED,This is a very good car please buy this car it is a good car,555555.69,500.0
